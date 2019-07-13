@@ -22,7 +22,7 @@ namespace DeepLinkR.Ui.Views
 	{
 		public DeepLinkCollectionView()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

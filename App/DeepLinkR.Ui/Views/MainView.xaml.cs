@@ -21,7 +21,7 @@ namespace DeepLinkR.Ui.Views
 	{
 		public MainView()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

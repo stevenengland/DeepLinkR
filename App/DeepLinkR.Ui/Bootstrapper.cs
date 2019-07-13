@@ -1,21 +1,31 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using DeepLinkR.Core.Configuration;
 using DeepLinkR.Core.Services.ClipboardManager;
+using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Core.Types;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
+using DeepLinkR.Ui.Models;
 using DeepLinkR.Ui.ViewModels;
+using Newtonsoft.Json;
 
 namespace DeepLinkR.Ui
 {
 	public class Bootstrapper : BootstrapperBase
 	{
-		private SimpleContainer simpleContainer = new SimpleContainer();
+		private readonly SimpleContainer simpleContainer = new SimpleContainer();
+
+		private IConfigurationCollection ConfigurationCollection { get; set; }
+
+		private IDeepLinkManager DeepLinkManager { get; set; }
 
 		public Bootstrapper()
 		{
@@ -25,10 +35,13 @@ namespace DeepLinkR.Ui
 		protected override void Configure()
 		{
 			// base.Configure();
+			this.ConfigurationCollection = this.ReadConfiguration();
+
+			this.DeepLinkManager = new DeepLinkManager(this.ConfigurationCollection.DeepLinkConfiguration);
 
 			var mapperConfiguration = new MapperConfiguration(cfg =>
 			{
-				// cfg.CreateMap<libModel, uiModel>();
+				cfg.CreateMap<DeepLinkMatch, DeepLinkMatchDisplayModel>();
 			});
 
 			var autoMapper = mapperConfiguration.CreateMapper();
@@ -36,13 +49,15 @@ namespace DeepLinkR.Ui
 			this.simpleContainer.Instance(autoMapper);
 
 			this.simpleContainer.Instance(this.simpleContainer);
-				// .PerRequest
 
+				// .PerRequest
 			this.simpleContainer
 				.Singleton<IWindowManager, WindowManager>()
 				.Singleton<IEventAggregator, EventAggregator>()
 				.Singleton<IClipboardManager, ClipboardManager>()
-				.Singleton<INHotkeyManagerMapper, NHotkeyManagerMapper>();
+				.Singleton<INHotkeyManagerMapper, NHotkeyManagerMapper>()
+				.Instance<IConfigurationCollection>(this.ConfigurationCollection)
+				.Instance<IDeepLinkManager>(this.DeepLinkManager);
 
 			this.GetType().Assembly.GetTypes()
 				.Where(type => type.IsClass)
@@ -71,6 +86,15 @@ namespace DeepLinkR.Ui
 		protected override void BuildUp(object instance)
 		{
 			this.simpleContainer.BuildUp(instance);
+		}
+
+		private ConfigurationCollection ReadConfiguration()
+		{
+			using (var streamReader = new StreamReader("config.json"))
+			{
+				var jsonString = streamReader.ReadToEnd();
+				return JsonConvert.DeserializeObject<ConfigurationCollection>(jsonString);
+			}
 		}
 	}
 }

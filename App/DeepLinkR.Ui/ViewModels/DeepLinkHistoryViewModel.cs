@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeepLinkR.Ui.ViewModels
 {
-	class DeepLinkHistoryViewModel
+	public class DeepLinkHistoryViewModel
 	{
 	}
 }

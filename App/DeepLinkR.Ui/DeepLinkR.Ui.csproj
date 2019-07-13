@@ -92,6 +92,8 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\INHotkeyManagerMapper.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\NHotkeyManagerMapper.cs" />
+    <Compile Include="Models\DeepLinkMatchDisplayModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\DeepLinkCollectionViewModel.cs" />
     <Compile Include="ViewModels\DeepLinkHistoryViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -136,9 +138,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\DeepLinkCollectionView.xaml">
       <SubType>Designer</SubType>
