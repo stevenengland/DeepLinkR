@@ -1,0 +1,51 @@
+{
+	"deepLinkConfiguration": {
+		"deepLinkCategories": [
+			{
+				"name": "Google",
+				"deepLinks": [
+					{
+						"name": "Search Keyword",
+						"url": "www.google.com/{SearchKeyWord}"
+					},
+					{
+						"name": "Search Keyword limited to photos",
+						"url": "www.google.com/{SearchKeyWord}?limit=photos"
+					}
+				]
+			},
+			{
+				"name": "Bing",
+				"deepLinks": [
+					{
+						"name": "Search Keyword",
+						"url": "www.bing.com/{SearchKeyWord}"
+					},
+					{
+						"name": "Search Keyword limited to photos",
+						"url": "www.bing.com/{SearchKeyWord}?limit=photos"
+					}
+				]
+			}
+		],
+		"deepLinkKeys": [
+			{
+				"name": "Search Keyword",
+				"regExPattern": [
+					"pattern1",
+					"pattern2"
+				]
+			},
+			{
+				"name": "ApiItem",
+				"regExPattern": [
+					"pattern1",
+					"pattern2"
+				]
+			}
+		]
+	},
+	"appConfiguration": {
+		"settingKey": "ApplicationSettings"
+	}
+}

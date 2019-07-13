@@ -3,7 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Ui", "DeepLinkR.Ui\DeepLinkR.Ui.csproj", "{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Ui", "App\DeepLinkR.Ui\DeepLinkR.Ui.csproj", "{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Core", "App\DeepLinkR.Core\DeepLinkR.Core.csproj", "{78DF02BD-992D-4C68-B30C-07AEA37CF48D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6F18D074-2233-4BD6-A7C5-FEBA4980DF39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Core.Tests", "Tests\DeepLinkR.Core.Tests\DeepLinkR.Core.Tests.csproj", "{28E1AB34-C58E-4C8B-B20D-58940C915EC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Ui.Tests", "Tests\DeepLinkR.Ui.Tests\DeepLinkR.Ui.Tests.csproj", "{78911FF0-219B-4A3E-8CC0-C04DC8431D4B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}"
+	ProjectSection(SolutionItems) = preProject
+		stylecop\AnalyzerRules.ruleset = stylecop\AnalyzerRules.ruleset
+		config\config.json = config\config.json
+		stylecop\stylecop.json = stylecop\stylecop.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +30,25 @@ Global
 		{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78DF02BD-992D-4C68-B30C-07AEA37CF48D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DF02BD-992D-4C68-B30C-07AEA37CF48D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DF02BD-992D-4C68-B30C-07AEA37CF48D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DF02BD-992D-4C68-B30C-07AEA37CF48D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E1AB34-C58E-4C8B-B20D-58940C915EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E1AB34-C58E-4C8B-B20D-58940C915EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E1AB34-C58E-4C8B-B20D-58940C915EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E1AB34-C58E-4C8B-B20D-58940C915EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{28E1AB34-C58E-4C8B-B20D-58940C915EC5} = {6F18D074-2233-4BD6-A7C5-FEBA4980DF39}
+		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B} = {6F18D074-2233-4BD6-A7C5-FEBA4980DF39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {25061B4B-A61B-42DD-BE34-3E03BA467BD5}
