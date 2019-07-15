@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Caliburn.Micro;
+using DeepLinkR.Core.Helper.SyncCommand;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Models;
@@ -34,6 +35,10 @@ namespace DeepLinkR.Ui.ViewModels
 			this.LoadMenuItems();
 		}
 
+		public ICommand MenuItemsSelectionChangedCommand => new SyncCommand(() => this.OnMenuItemsSelectionChanged());
+
+		public ICommand ExitAppCommand => new SyncCommand(() => this.OnExitApp());
+
 		public ISnackbarMessageQueue SbMessageQueue { get => this.sbMessageQueue; private set => this.sbMessageQueue = value; }
 
 		public NavigationMenuItem[] MenuItems { get; private set; }
@@ -46,11 +51,6 @@ namespace DeepLinkR.Ui.ViewModels
 				this.isMenuBarVisible = value;
 				this.NotifyOfPropertyChange(() => this.IsMenuBarVisible);
 			}
-		}
-
-		public void OnMenuItemsSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			this.IsMenuBarVisible = false;
 		}
 
 		protected override void OnViewLoaded(object view)
@@ -88,6 +88,16 @@ namespace DeepLinkR.Ui.ViewModels
 		private void OnDeepLinkROpen(object sender, HotkeyEventArgs e)
 		{
 			// OpenMainWindow
+		}
+
+		private void OnMenuItemsSelectionChanged()
+		{
+			this.IsMenuBarVisible = false;
+		}
+
+		private void OnExitApp()
+		{
+			System.Windows.Application.Current.Shutdown();
 		}
 	}
 }

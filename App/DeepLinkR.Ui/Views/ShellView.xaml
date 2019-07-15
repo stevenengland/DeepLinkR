@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:DeepLinkR.Ui.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:models="clr-namespace:DeepLinkR.Ui.Models" 
-        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:cal="http://www.caliburnproject.org" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="ShellView" Height="450" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -31,12 +32,17 @@
                                     HorizontalAlignment="Right" Margin="16"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
 					<ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"
-                             ItemsSource="{Binding MenuItems}"
-					         cal:Message.Attach="[Event SelectionChanged]=[Action OnMenuItemsSelectionChanged($source,$eventArgs)];">
+                             ItemsSource="{Binding MenuItems}">
+						<!--cal:Message.Attach="[Event SelectionChanged]=[Action OnMenuItemsSelectionChanged($source,$eventArgs)];"-->
 						<!-- ToDo: Activate in next version of MaterialDesignThemes 2.5.2
 						<ListBox.Resources>
 							<Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}"/>
 						</ListBox.Resources>-->
+						<i:Interaction.Triggers>
+						<i:EventTrigger EventName="SelectionChanged">
+								<i:InvokeCommandAction Command="{Binding MenuItemsSelectionChangedCommand}"  CommandParameter="{Binding ElementName=DemoItemsListBox, Path=SelectedItem}"/>
+						</i:EventTrigger>
+						</i:Interaction.Triggers>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="models:NavigationMenuItem">
 								<TextBlock Text="{Binding Name}" Margin="32 0 32 0" />
@@ -60,7 +66,8 @@
 								<Button Content="Nice Popup" />
 								<Separator/>-->
 								<Button Content="Send App to Tray"/>
-								<Button Content="Exit App"/>
+								<Button Content="Exit App"
+								        Command="{Binding ExitAppCommand}"/>
 							</StackPanel>
 						</materialDesign:PopupBox>
 						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Material Design In XAML Toolkit</TextBlock>

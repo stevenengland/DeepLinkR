@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DeepLinkR.Core.Helper.AsyncVoid
+namespace DeepLinkR.Core.Helper.AsyncCommand
 {
     public interface IAsyncCommand : ICommand
     {
@@ -10,7 +10,7 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
         bool CanExecute();
     }
 
-	public interface IAsyncCommand<T> : ICommand
+    public interface IAsyncCommand<T> : ICommand
     {
         Task ExecuteAsync(T parameter);
 

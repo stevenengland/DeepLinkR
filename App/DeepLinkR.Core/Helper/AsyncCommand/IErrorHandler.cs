@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeepLinkR.Core.Helper.AsyncVoid
+namespace DeepLinkR.Core.Helper.AsyncCommand
 {
     public interface IErrorHandler
     {

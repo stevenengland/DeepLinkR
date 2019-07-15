@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DeepLinkR.Core.Helper.AsyncVoid
+namespace DeepLinkR.Core.Helper.AsyncCommand
 {
     public static class TaskUtilities
     {

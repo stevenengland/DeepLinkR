@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DeepLinkR.Core.Helper.AsyncVoid
+namespace DeepLinkR.Core.Helper.AsyncCommand
 {
 #pragma warning disable CA2007 // Do not directly await a Task
 	public class AsyncCommand : IAsyncCommand
@@ -10,7 +10,7 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
 	    private readonly Func<Task> execute;
 	    private readonly Func<bool> canExecute;
 	    private readonly IErrorHandler errorHandler;
-		private bool isExecuting;
+	    private bool isExecuting;
 
 	    public AsyncCommand(
 		    Func<Task> execute,
@@ -22,14 +22,14 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
 		    this.errorHandler = errorHandler;
 	    }
 
-		public event EventHandler CanExecuteChanged;
+	    public event EventHandler CanExecuteChanged;
 
-        public bool CanExecute()
+	    public bool CanExecute()
         {
             return !this.isExecuting && (this.canExecute?.Invoke() ?? true);
         }
 
-        public async Task ExecuteAsync()
+	    public async Task ExecuteAsync()
         {
             if (this.CanExecute())
             {
@@ -47,15 +47,15 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
             this.TriggerCanExecuteChanged();
         }
 
-		public void TriggerCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+	    public void TriggerCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
 		#region Explicit implementations
-		bool ICommand.CanExecute(object parameter)
+	    bool ICommand.CanExecute(object parameter)
         {
             return this.CanExecute();
         }
 
-        void ICommand.Execute(object parameter)
+	    void ICommand.Execute(object parameter)
         {
             this.ExecuteAsync().FireAndForgetSafeAsync(this.errorHandler);
         }
@@ -71,7 +71,7 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
 		private readonly IErrorHandler errorHandler;
 		private bool isExecuting;
 
-        public AsyncCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, IErrorHandler errorHandler = null)
+		public AsyncCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, IErrorHandler errorHandler = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;
@@ -85,14 +85,14 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
             return !this.isExecuting && (this.canExecute?.Invoke(parameter) ?? true);
         }
 
-        public async Task ExecuteAsync(T parameter)
+		public async Task ExecuteAsync(T parameter)
         {
             if (this.CanExecute(parameter))
             {
                 try
                 {
                     this.isExecuting = true;
-					await this.execute(parameter);
+                    await this.execute(parameter);
 				}
                 finally
                 {
@@ -103,18 +103,18 @@ namespace DeepLinkR.Core.Helper.AsyncVoid
             this.TriggerCanExecuteChanged();
         }
 
-        public void TriggerCanExecuteChanged()
+		public void TriggerCanExecuteChanged()
         {
             this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #region Explicit implementations
-        bool ICommand.CanExecute(object parameter)
+		bool ICommand.CanExecute(object parameter)
         {
             return this.CanExecute((T)parameter);
         }
 
-        void ICommand.Execute(object parameter)
+		void ICommand.Execute(object parameter)
         {
             this.ExecuteAsync((T)parameter).FireAndForgetSafeAsync(this.errorHandler);
         }

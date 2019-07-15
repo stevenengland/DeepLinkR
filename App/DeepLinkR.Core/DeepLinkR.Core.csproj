@@ -70,10 +70,12 @@
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationCollection.cs" />
     <Compile Include="Configuration\IDeepLinkConfiguration.cs" />
-    <Compile Include="Helper\AsyncVoid\AsyncCommand.cs" />
-    <Compile Include="Helper\AsyncVoid\IAsyncCommand.cs" />
-    <Compile Include="Helper\AsyncVoid\IErrorHandler.cs" />
-    <Compile Include="Helper\AsyncVoid\TaskUtilities.cs" />
+    <Compile Include="Helper\AsyncCommand\AsyncCommand.cs" />
+    <Compile Include="Helper\AsyncCommand\IAsyncCommand.cs" />
+    <Compile Include="Helper\AsyncCommand\IErrorHandler.cs" />
+    <Compile Include="Helper\AsyncCommand\TaskUtilities.cs" />
+    <Compile Include="Helper\SyncCommand\ISyncCommand.cs" />
+    <Compile Include="Helper\SyncCommand\SyncCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ClipboardManager\ClipboardManager.cs" />
     <Compile Include="Services\ClipboardManager\IClipboardManager.cs" />
