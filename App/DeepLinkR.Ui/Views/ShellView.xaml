@@ -4,10 +4,91 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeepLinkR.Ui.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:models="clr-namespace:DeepLinkR.Ui.Models" 
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="ShellView" Height="450" Width="800"
-        Background="Aqua">
-    <Grid>
-        
-    </Grid>
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
+	<materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding SbMessageQueue}">
+		<materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+			<!-- LEFT MENU -->
+			<materialDesign:DrawerHost.LeftDrawerContent>
+				<DockPanel MinWidth="212">
+					<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+					<ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"
+                             ItemsSource="{Binding MenuItems}"
+					         cal:Message.Attach="[Event SelectionChanged]=[Action OnMenuItemsSelectionChanged($source,$eventArgs)];">
+						<!-- ToDo: Activate in next version of MaterialDesignThemes 2.5.2
+						<ListBox.Resources>
+							<Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}"/>
+						</ListBox.Resources>-->
+						<ListBox.ItemTemplate>
+							<DataTemplate DataType="models:NavigationMenuItem">
+								<TextBlock Text="{Binding Name}" Margin="32 0 32 0" />
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</DockPanel>
+			</materialDesign:DrawerHost.LeftDrawerContent>
+			<DockPanel>
+				
+				<!-- THREE DOTS MENU -->
+				<materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                            Mode="PrimaryMid" DockPanel.Dock="Top">
+					<DockPanel>
+
+						<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="{Binding IsMenuBarVisible, Mode=TwoWay}"
+                                        x:Name="MenuToggleButton"/>
+						<materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+							<StackPanel>
+								<!--<Button Content="Hello World" />
+								<Button Content="Nice Popup" />
+								<Separator/>-->
+								<Button Content="Send App to Tray"/>
+								<Button Content="Exit App"/>
+							</StackPanel>
+						</materialDesign:PopupBox>
+						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Material Design In XAML Toolkit</TextBlock>
+					</DockPanel>
+				</materialDesign:ColorZone>
+
+
+				<!-- MAIN BODY SECTION -->
+				<Grid>
+					<Grid.RowDefinitions>
+						<!--<RowDefinition Height="Auto" />-->
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<!--<domain1:DocumentationLinks DataContext="{Binding ElementName=DemoItemsListBox, Path=SelectedItem}"
+                                                Margin="0 0 0 16"
+                                                />-->
+					<ScrollViewer Grid.Row="0" 
+                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                                  Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+						<!--<ContentControl Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />-->
+						<ContentControl cal:View.Model="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
+					</ScrollViewer>
+
+					<materialDesign:Snackbar MessageQueue="{Binding SbMessageQueue}" x:Name="MainSnackbar"
+                                            Grid.Row="0" />
+				</Grid>
+			</DockPanel>
+		</materialDesign:DrawerHost>
+	</materialDesign:DialogHost>
 </Window>

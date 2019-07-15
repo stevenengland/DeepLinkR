@@ -7,7 +7,7 @@ using Caliburn.Micro;
 
 namespace DeepLinkR.Ui.ViewModels
 {
-	public class MainViewModel : Screen
+	public class AboutViewModel : Screen
 	{
 	}
 }

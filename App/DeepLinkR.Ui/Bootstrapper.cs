@@ -15,6 +15,7 @@ using DeepLinkR.Core.Types;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Models;
 using DeepLinkR.Ui.ViewModels;
+using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
 
 namespace DeepLinkR.Ui
@@ -26,6 +27,8 @@ namespace DeepLinkR.Ui
 		private IConfigurationCollection ConfigurationCollection { get; set; }
 
 		private IDeepLinkManager DeepLinkManager { get; set; }
+
+		private ISnackbarMessageQueue SbMessageQueue { get; set; }
 
 		public Bootstrapper()
 		{
@@ -46,6 +49,8 @@ namespace DeepLinkR.Ui
 
 			var autoMapper = mapperConfiguration.CreateMapper();
 
+			this.SbMessageQueue = new SnackbarMessageQueue();
+
 			this.simpleContainer.Instance(autoMapper);
 
 			this.simpleContainer.Instance(this.simpleContainer);
@@ -57,7 +62,8 @@ namespace DeepLinkR.Ui
 				.Singleton<IClipboardManager, ClipboardManager>()
 				.Singleton<INHotkeyManagerMapper, NHotkeyManagerMapper>()
 				.Instance<IConfigurationCollection>(this.ConfigurationCollection)
-				.Instance<IDeepLinkManager>(this.DeepLinkManager);
+				.Instance<IDeepLinkManager>(this.DeepLinkManager)
+				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue);
 
 			this.GetType().Assembly.GetTypes()
 				.Where(type => type.IsClass)

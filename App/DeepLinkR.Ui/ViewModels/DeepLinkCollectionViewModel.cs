@@ -21,14 +21,16 @@ namespace DeepLinkR.Ui.ViewModels
 		private IClipboardManager clipboardManager;
 		private IDeepLinkManager deepLinkManager;
 		private IMapper mapper;
+		private IEventAggregator eventAggregator;
 		private BindingList<DeepLinkMatchDisplayModel> deepLinkMatchesDisplayModels;
 
-		public DeepLinkCollectionViewModel(IConfigurationCollection configurationCollection, IClipboardManager clipboardManager, IDeepLinkManager deepLinkManager, IMapper mapper)
+		public DeepLinkCollectionViewModel(IConfigurationCollection configurationCollection, IClipboardManager clipboardManager, IDeepLinkManager deepLinkManager, IMapper mapper, IEventAggregator eventAggregator)
 		{
 			this.clipboardManager = clipboardManager;
 			this.configurationCollection = configurationCollection;
 			this.deepLinkManager = deepLinkManager;
 			this.mapper = mapper;
+			this.eventAggregator = eventAggregator;
 
 			this.clipboardManager.ClipboardTextUpdateReceived += this.OnClipboardTextUpdateReceived;
 		}
@@ -49,6 +51,7 @@ namespace DeepLinkR.Ui.ViewModels
 			if (deepLinkMatches?.Count >= 0)
 			{
 				this.DeepLinkMatchesDisplayModels = new BindingList<DeepLinkMatchDisplayModel>(this.mapper.Map<List<DeepLinkMatchDisplayModel>>(deepLinkMatches));
+				// this.eventAggregator.PublishOnUIThread();
 			}
 		}
 
