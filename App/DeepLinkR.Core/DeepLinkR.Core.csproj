@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <ContentWithTargetPath Include="$(SolutionDir)config\config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>config.json</TargetPath>
     </ContentWithTargetPath>
   </ItemGroup>

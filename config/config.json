@@ -30,7 +30,7 @@
 		],
 		"deepLinkKeys": [
 			{
-				"name": "Search Keyword",
+				"name": "SearchKeyWord",
 				"regExPattern": [
 					"pattern1",
 					"pattern2"
