@@ -35,7 +35,7 @@ namespace DeepLinkR.Core.Services.DeepLinkManager
 						{
 							resultSet.Add(new DeepLinkMatch()
 							{
-								DeepLingKeyName = deepLingKeyName,
+								DeepLinkKeyName = deepLingKeyName,
 								DeepLinkCategoryName = deepLinkCategory.Name,
 								DeepLinkName = deepLink.Name,
 								DeepLinkUrl = deepLink.Url.Replace("{" + deepLingKeyName + "}", text),

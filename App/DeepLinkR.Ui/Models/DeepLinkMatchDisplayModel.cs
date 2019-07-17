@@ -84,4 +84,4 @@ namespace DeepLinkR.Ui.Models
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
-}	
+}

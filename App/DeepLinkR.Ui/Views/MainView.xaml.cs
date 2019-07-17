@@ -16,13 +16,13 @@ using System.Windows.Shapes;
 namespace DeepLinkR.Ui.Views
 {
 	/// <summary>
-	/// Interaction logic for MainView.xaml
+	/// Interaction logic for MainView.xaml.
 	/// </summary>
 	public partial class MainView : UserControl
 	{
 		public MainView()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

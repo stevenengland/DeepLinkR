@@ -96,11 +96,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\DeepLinkMatchesUpdatedEvent.cs" />
+    <Compile Include="Events\HistoricalDeepLinkSelectedEvent.cs" />
     <Compile Include="Helper\Extensions\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\INHotkeyManagerMapper.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\NHotkeyManagerMapper.cs" />
     <Compile Include="Models\DeepLinkMatchDisplayModel.cs" />
+    <Compile Include="Models\HierarchyLevelOne.cs" />
     <Compile Include="Models\NavigationMenuItem.cs" />
+    <Compile Include="Models\HierarchyLevelTwo.cs" />
+    <Compile Include="Models\HierarchyLevelThree.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\DeepLinkCollectionViewModel.cs" />
@@ -113,8 +118,8 @@
     <Compile Include="Views\DeepLinkCollectionView.xaml.cs">
       <DependentUpon>DeepLinkCollectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeepLinkHistory.xaml.cs">
-      <DependentUpon>DeepLinkHistory.xaml</DependentUpon>
+    <Compile Include="Views\DeepLinkHistoryView.xaml.cs">
+      <DependentUpon>DeepLinkHistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -160,7 +165,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DeepLinkHistory.xaml">
+    <Page Include="Views\DeepLinkHistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

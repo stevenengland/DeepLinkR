@@ -24,16 +24,16 @@ namespace DeepLinkR.Ui
 	{
 		private readonly SimpleContainer simpleContainer = new SimpleContainer();
 
+		public Bootstrapper()
+		{
+			this.Initialize();
+		}
+
 		private IConfigurationCollection ConfigurationCollection { get; set; }
 
 		private IDeepLinkManager DeepLinkManager { get; set; }
 
 		private ISnackbarMessageQueue SbMessageQueue { get; set; }
-
-		public Bootstrapper()
-		{
-			this.Initialize();
-		}
 
 		protected override void Configure()
 		{

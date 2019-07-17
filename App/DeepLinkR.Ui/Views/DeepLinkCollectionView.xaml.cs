@@ -18,11 +18,11 @@ namespace DeepLinkR.Ui.Views
 	/// <summary>
 	/// Interaction logic for DeepLinkCollectionView.xaml
 	/// </summary>
-	public partial class DeepLinkCollectionView : Page
+	public partial class DeepLinkCollectionView : UserControl
 	{
 		public DeepLinkCollectionView()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 	}
 }

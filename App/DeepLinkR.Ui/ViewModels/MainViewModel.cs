@@ -9,5 +9,14 @@ namespace DeepLinkR.Ui.ViewModels
 {
 	public class MainViewModel : Screen
 	{
+		public MainViewModel()
+		{
+			this.DeepLinkCollectionViewModel = IoC.Get<DeepLinkCollectionViewModel>();
+			this.DeepLinkHistoryViewModel = IoC.Get<DeepLinkHistoryViewModel>();
+		}
+
+		public DeepLinkCollectionViewModel DeepLinkCollectionViewModel { get; private set; }
+
+		public DeepLinkHistoryViewModel DeepLinkHistoryViewModel { get; private set; }
 	}
 }

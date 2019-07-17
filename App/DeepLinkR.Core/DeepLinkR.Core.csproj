@@ -85,6 +85,7 @@
     <Compile Include="Types\DeepLinkCategory.cs" />
     <Compile Include="Types\DeepLinkKey.cs" />
     <Compile Include="Types\DeepLinkMatch.cs" />
+    <Compile Include="Types\Enums\DeepLinkSortOrder.cs" />
     <Compile Include="Types\EventArgs\ClipboardTextUpdateEventArgs.cs" />
     <Compile Include="Types\EventArgs\DeepLinksUpdatedEventArgs.cs" />
   </ItemGroup>

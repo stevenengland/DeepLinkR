@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DeepLinkR.Ui.Views
 {
 	/// <summary>
-	/// Interaction logic for DeepLinkHistory.xaml
+	/// Interaction logic for DeepLinkHistoryView.xaml
 	/// </summary>
-	public partial class DeepLinkHistory : Page
+	public partial class DeepLinkHistoryView : UserControl
 	{
-		public DeepLinkHistory()
+		public DeepLinkHistoryView()
 		{
 			this.InitializeComponent();
 		}

@@ -10,7 +10,7 @@ namespace DeepLinkR.Core.Types
 	{
 		public string DeepLinkCategoryName { get; set; }
 
-		public string DeepLingKeyName { get; set; }
+		public string DeepLinkKeyName { get; set; }
 
 		public string DeepLinkName { get; set; }
 
