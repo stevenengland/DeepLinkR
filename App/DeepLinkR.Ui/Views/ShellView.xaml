@@ -14,7 +14,10 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -26,11 +29,13 @@
 		<materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
 			<!-- LEFT MENU -->
 			<materialDesign:DrawerHost.LeftDrawerContent>
-				<DockPanel MinWidth="212">
+				<DockPanel MinWidth="250">
 					<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
-                                    DockPanel.Dock="Top"
-                                    HorizontalAlignment="Right" Margin="16"
-                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                                  DockPanel.Dock="Top"
+                                  HorizontalAlignment="Right" Margin="16"
+                                  IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" 
+					              Width="20"
+					              Height="20"/>
 					<ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"
                              ItemsSource="{Binding MenuItems}">
 						<!--cal:Message.Attach="[Event SelectionChanged]=[Action OnMenuItemsSelectionChanged($source,$eventArgs)];"-->
@@ -52,15 +57,22 @@
 				</DockPanel>
 			</materialDesign:DrawerHost.LeftDrawerContent>
 			<DockPanel>
-				
-				<!-- THREE DOTS MENU -->
-				<materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                            Mode="PrimaryMid" DockPanel.Dock="Top">
+				<!-- TITLE BAR -->
+				<materialDesign:ColorZone Padding="7" 
+				                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Mode="PrimaryMid" 
+				                          DockPanel.Dock="Top">
 					<DockPanel>
-
-						<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="{Binding IsMenuBarVisible, Mode=TwoWay}"
-                                        x:Name="MenuToggleButton"/>
-						<materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+						<!-- HAMBURGER MENU -->
+						<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+						              IsChecked="{Binding IsMenuBarVisible, Mode=TwoWay}"
+                                      x:Name="MenuToggleButton"
+						              Width="20"
+						              Height="20"/>
+						<!-- THREE DOTS MENU -->
+						<materialDesign:PopupBox DockPanel.Dock="Right" 
+						                         PlacementMode="BottomAndAlignRightEdges" 
+						                         StaysOpen="False">
 							<StackPanel>
 								<!--<Button Content="Hello World" />
 								<Button Content="Nice Popup" />
@@ -70,7 +82,9 @@
 								        Command="{Binding ExitAppCommand}"/>
 							</StackPanel>
 						</materialDesign:PopupBox>
-						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Material Design In XAML Toolkit</TextBlock>
+						<TextBlock HorizontalAlignment="Center" 
+						           VerticalAlignment="Center" 
+						           FontSize="16">DeepLinkR</TextBlock>
 					</DockPanel>
 				</materialDesign:ColorZone>
 
