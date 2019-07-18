@@ -17,7 +17,8 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         
         WindowStyle="None"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowState="{Binding CurWindowState, Mode=TwoWay}">
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -37,16 +38,17 @@
 					              Width="20"
 					              Height="20"/>
 					<ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"
-                             ItemsSource="{Binding MenuItems}">
+					         ItemsSource="{Binding MenuItems}">
 						<!--cal:Message.Attach="[Event SelectionChanged]=[Action OnMenuItemsSelectionChanged($source,$eventArgs)];"-->
 						<!-- ToDo: Activate in next version of MaterialDesignThemes 2.5.2
 						<ListBox.Resources>
 							<Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}"/>
 						</ListBox.Resources>-->
 						<i:Interaction.Triggers>
-						<i:EventTrigger EventName="SelectionChanged">
-								<i:InvokeCommandAction Command="{Binding MenuItemsSelectionChangedCommand}"  CommandParameter="{Binding ElementName=DemoItemsListBox, Path=SelectedItem}"/>
-						</i:EventTrigger>
+							<i:EventTrigger EventName="SelectionChanged">
+								<i:InvokeCommandAction Command="{Binding MenuItemsSelectionChangedCommand}"
+								                       CommandParameter="{Binding ElementName=DemoItemsListBox, Path=SelectedItem}" />
+							</i:EventTrigger>
 						</i:Interaction.Triggers>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="models:NavigationMenuItem">
@@ -62,8 +64,21 @@
 				                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                           Mode="PrimaryMid" 
 				                          DockPanel.Dock="Top">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseDoubleClick">
+							<i:InvokeCommandAction Command="{Binding TitleBarDoubleClickedCommand}" />
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
 					<DockPanel>
 						<!-- HAMBURGER MENU -->
+						
+						<!--<i:Interaction.Triggers>
+							<i:EventTrigger EventName="LeftDoubleClick">
+								<i:InvokeCommandAction>
+									<i:CustomPropertyValueEditor ></i:CustomPropertyValueEditor>
+								</i:InvokeCommandAction>
+							</i:EventTrigger>
+						</i:Interaction.Triggers>-->
 						<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
 						              IsChecked="{Binding IsMenuBarVisible, Mode=TwoWay}"
                                       x:Name="MenuToggleButton"

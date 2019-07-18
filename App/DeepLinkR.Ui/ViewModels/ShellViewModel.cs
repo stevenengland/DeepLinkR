@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Caliburn.Micro;
@@ -21,6 +22,7 @@ namespace DeepLinkR.Ui.ViewModels
 		private INHotkeyManagerMapper hotkeyManager;
 		private ISnackbarMessageQueue sbMessageQueue;
 		private bool isMenuBarVisible;
+		private WindowState curWindowState;
 
 		public ShellViewModel(IClipboardManager clipboardManager, INHotkeyManagerMapper hotkeyManager, ISnackbarMessageQueue snackbarMessageQueue)
 		{
@@ -39,6 +41,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand ExitAppCommand => new SyncCommand(() => this.OnExitApp());
 
+		public ICommand TitleBarDoubleClickedCommand => new SyncCommand(() => this.OnTitleBarDoubleClicked());
+
 		public ISnackbarMessageQueue SbMessageQueue { get => this.sbMessageQueue; private set => this.sbMessageQueue = value; }
 
 		public NavigationMenuItem[] MenuItems { get; private set; }
@@ -50,6 +54,16 @@ namespace DeepLinkR.Ui.ViewModels
 			{
 				this.isMenuBarVisible = value;
 				this.NotifyOfPropertyChange(() => this.IsMenuBarVisible);
+			}
+		}
+
+		public WindowState CurWindowState
+		{
+			get => this.curWindowState;
+			set
+			{
+				this.curWindowState = value;
+				this.NotifyOfPropertyChange(() => this.CurWindowState);
 			}
 		}
 
@@ -93,6 +107,11 @@ namespace DeepLinkR.Ui.ViewModels
 		private void OnMenuItemsSelectionChanged()
 		{
 			this.IsMenuBarVisible = false;
+		}
+
+		private void OnTitleBarDoubleClicked()
+		{
+			this.CurWindowState = this.CurWindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
 		}
 
 		private void OnExitApp()
