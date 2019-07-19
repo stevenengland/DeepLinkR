@@ -13,7 +13,7 @@
 		<StackPanel Orientation="Horizontal">
 			<TextBlock VerticalAlignment="Center"
 			           Margin="0 0 10 0">Deeplinks</TextBlock>
-			<Button ToolTip="Change alphabetical Sort Order"
+			<Button ToolTip="Change Sort Order (asc - desc)"
 			        
 			        Style="{DynamicResource MaterialDesignFlatButton}"
 			        HorizontalContentAlignment="Left"
@@ -21,6 +21,16 @@
 
 				<StackPanel Orientation="Horizontal">
 					<materialDesign:PackIcon Kind="SortByAlpha" />
+				</StackPanel>
+			</Button>
+			<Button ToolTip="Change Sort Order (Category - Key)"
+			        
+			        Style="{DynamicResource MaterialDesignFlatButton}"
+			        HorizontalContentAlignment="Left"
+			        Command="{Binding ChangeDeepLinkSortOrderDirectionCommand}">
+
+				<StackPanel Orientation="Horizontal">
+					<materialDesign:PackIcon Kind="Sort" />
 				</StackPanel>
 			</Button>
 		</StackPanel>

@@ -46,6 +46,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand ChangeSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeSortOrderDirection());
 
+		public ICommand ChangeDeepLinkSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeDeepLinkSortOrderDirection());
+
 		public BindingList<DeepLinkMatchDisplayModel> DeepLinkMatchesDisplayModels
 		{
 			get => this.deepLinkMatchesDisplayModels;
@@ -88,7 +90,7 @@ namespace DeepLinkR.Ui.ViewModels
 			{
 				case DeepLinkSortOrder.Category:
 
-					var groupedDeepLinks = descendingSortOrder
+					var groupedDeepLinksByCategory = descendingSortOrder
 						? deepLinkMatches.GroupBy(match => new {match.DeepLinkCategoryName, match.DeepLinkKeyName,})
 								.OrderByDescending(matches => matches.Key.DeepLinkCategoryName)
 								.ThenByDescending(matches => matches.Key.DeepLinkKeyName)
@@ -97,7 +99,7 @@ namespace DeepLinkR.Ui.ViewModels
 								.ThenBy(matches => matches.Key.DeepLinkKeyName)
 						;
 
-					foreach (var group in groupedDeepLinks)
+					foreach (var group in groupedDeepLinksByCategory)
 					{
 						if (levelOneList.All(x => x.Name != @group.Key.DeepLinkCategoryName))
 						{
@@ -120,6 +122,36 @@ namespace DeepLinkR.Ui.ViewModels
 
 					break;
 				case DeepLinkSortOrder.Key:
+					var groupedDeepLinksByKey = descendingSortOrder
+							? deepLinkMatches.GroupBy(match => new { match.DeepLinkKeyName, match.DeepLinkCategoryName, })
+								.OrderByDescending(matches => matches.Key.DeepLinkKeyName)
+								.ThenByDescending(matches => matches.Key.DeepLinkCategoryName)
+							: deepLinkMatches.GroupBy(match => new { match.DeepLinkKeyName, match.DeepLinkCategoryName, })
+								.OrderBy(matches => matches.Key.DeepLinkKeyName)
+								.ThenBy(matches => matches.Key.DeepLinkCategoryName)
+						;
+
+					foreach (var group in groupedDeepLinksByKey)
+					{
+						if (levelOneList.All(x => x.Name != @group.Key.DeepLinkKeyName))
+						{
+							levelOneList.Add(new HierarchyLevelOne() { Name = group.Key.DeepLinkKeyName, SecondLinkHierarchies = new List<HierarchyLevelTwo>() });
+						}
+
+						var levelOneItem = levelOneList.First(x => x.Name == group.Key.DeepLinkKeyName);
+						if (levelOneItem.SecondLinkHierarchies.Count(x => x.Name == @group.Key.DeepLinkCategoryName) == 0)
+						{
+							levelOneItem.SecondLinkHierarchies.Add(new HierarchyLevelTwo() { Name = group.Key.DeepLinkCategoryName, ThirdLinkHierarchies = new List<HierarchyLevelThree>() });
+						}
+
+						var levelTwoItem =
+							levelOneItem.SecondLinkHierarchies.First(x => x.Name == group.Key.DeepLinkCategoryName);
+						foreach (var item in group)
+						{
+							levelTwoItem.ThirdLinkHierarchies.Add(new HierarchyLevelThree() { Name = item.DeepLinkName, Url = item.DeepLinkUrl });
+						}
+					}
+
 					break;
 				default:
 					break;
@@ -141,6 +173,14 @@ namespace DeepLinkR.Ui.ViewModels
 		private void OnChangeSortOrderDirection()
 		{
 			this.isDescendingSortOrder = !this.isDescendingSortOrder;
+			this.Sideload(this.deepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
+		}
+
+		private void OnChangeDeepLinkSortOrderDirection()
+		{
+			this.deepLinkSortOrder = this.deepLinkSortOrder == DeepLinkSortOrder.Category
+				? DeepLinkSortOrder.Key
+				: DeepLinkSortOrder.Category;
 			this.Sideload(this.deepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
 		}
 	}

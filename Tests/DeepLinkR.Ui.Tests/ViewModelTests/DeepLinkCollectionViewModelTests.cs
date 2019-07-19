@@ -88,13 +88,13 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 		}
 
 		[Fact]
-		public void SortedListOfMatchesIsCreated()
+		public void SortedListOfMatchesByCategoryIsCreated()
 		{
 			var mockObjects = this.GetMockObjects();
 
 			var vm = this.ViewModelFactory(mockObjects);
 
-			vm.Sideload(MockedDeeplinkMatches.OrderTestList);
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList, DeepLinkSortOrder.Category);
 
 			var firstLevelOneItem = vm.HierarchicalLinks.First();
 			var lastLevelOneItem = vm.HierarchicalLinks.Last();
@@ -126,7 +126,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 
 			var vm = this.ViewModelFactory(mockObjects);
 
-			vm.Sideload(MockedDeeplinkMatches.OrderTestList);
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList, DeepLinkSortOrder.Category);
 
 			var firstLevelOneItem = vm.HierarchicalLinks.First();
 
@@ -137,6 +137,58 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			firstLevelOneItem = vm.HierarchicalLinks.First();
 
 			Assert.Equal("Cat2", firstLevelOneItem.Name);
+		}
+
+		[Fact]
+		public void SortedListOfMatchesByKeyIsCreated()
+		{
+			var mockObjects = this.GetMockObjects();
+
+			var vm = this.ViewModelFactory(mockObjects);
+
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList, DeepLinkSortOrder.Key);
+
+			var firstLevelOneItem = vm.HierarchicalLinks.First();
+			var lastLevelOneItem = vm.HierarchicalLinks.Last();
+
+			Assert.Equal("Key1", firstLevelOneItem.Name);
+			Assert.Equal("Cat1", firstLevelOneItem.SecondLinkHierarchies.First().Name);
+			Assert.Equal("Cat2", firstLevelOneItem.SecondLinkHierarchies.Last().Name);
+			Assert.Equal("Key3", lastLevelOneItem.Name);
+			Assert.Equal("Cat1", lastLevelOneItem.SecondLinkHierarchies.First().Name);
+			Assert.Equal("Cat2", lastLevelOneItem.SecondLinkHierarchies.Last().Name);
+
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList, DeepLinkSortOrder.Key, true);
+
+			firstLevelOneItem = vm.HierarchicalLinks.First();
+			lastLevelOneItem = vm.HierarchicalLinks.Last();
+
+			Assert.Equal("Key3", firstLevelOneItem.Name);
+			Assert.Equal("Cat2", firstLevelOneItem.SecondLinkHierarchies.First().Name);
+			Assert.Equal("Cat1", firstLevelOneItem.SecondLinkHierarchies.Last().Name);
+			Assert.Equal("Key1", lastLevelOneItem.Name);
+			Assert.Equal("Cat2", lastLevelOneItem.SecondLinkHierarchies.First().Name);
+			Assert.Equal("Cat1", lastLevelOneItem.SecondLinkHierarchies.Last().Name);
+		}
+
+		[Fact]
+		public void ChangingDeepLinkSortOrderIsHandled()
+		{
+			var mockObjects = this.GetMockObjects();
+
+			var vm = this.ViewModelFactory(mockObjects);
+
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList);
+
+			var firstLevelOneItem = vm.HierarchicalLinks.First();
+
+			Assert.Equal("Cat1", firstLevelOneItem.Name);
+
+			vm.ChangeDeepLinkSortOrderDirectionCommand.Execute(null);
+
+			firstLevelOneItem = vm.HierarchicalLinks.First();
+
+			Assert.Equal("Key1", firstLevelOneItem.Name);
 		}
 
 		private Dictionary<string, object> GetMockObjects()
