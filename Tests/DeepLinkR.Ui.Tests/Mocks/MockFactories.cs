@@ -8,6 +8,8 @@ using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
+using MaterialDesignThemes.Wpf;
 using Moq;
 
 namespace DeepLinkR.Ui.Tests.Mocks
@@ -37,6 +39,16 @@ namespace DeepLinkR.Ui.Tests.Mocks
 		public static IEventAggregator GetEventAggregator()
 		{
 			return new Mock<IEventAggregator>().Object;
+		}
+
+		public static ISnackbarMessageQueue GetISnackbarMessageQueue()
+		{
+			return new Mock<ISnackbarMessageQueue>().Object;
+		}
+
+		public static INHotkeyManagerMapper GetINHotkeyManagerMapper()
+		{
+			return new Mock<INHotkeyManagerMapper>().Object;
 		}
 	}
 }

@@ -65,12 +65,23 @@ namespace DeepLinkR.Ui
 				.Instance<IDeepLinkManager>(this.DeepLinkManager)
 				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue);
 
+			// Registers every ViewModel to the container
 			this.GetType().Assembly.GetTypes()
 				.Where(type => type.IsClass)
 				.Where(type => type.Name.EndsWith("ViewModel"))
 				.ToList()
 				.ForEach(viewModelType => this.simpleContainer.RegisterPerRequest(
 					viewModelType, viewModelType.ToString(), viewModelType));
+
+			// Alternative if handling singleton vs. perRequest is needed
+			// container
+			// .Singleton<MainPageViewModel>()
+			// .Singleton<MainViewModel>()
+			// .Singleton<AccountsViewModel>()
+			// .Singleton<AboutViewModel>()
+			// .PerRequest<SearchViewModel>()
+			// .PerRequest<SearchResultViewModel>()
+			// .PerRequest<CheckinViewModel>();
 		}
 
 		protected override void OnStartup(object sender, StartupEventArgs e)

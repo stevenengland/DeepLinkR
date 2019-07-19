@@ -76,7 +76,7 @@ namespace DeepLinkR.Ui.ViewModels
 		protected override void OnViewLoaded(object view)
 		{
 			base.OnViewLoaded(view);
-			this.SbMessageQueue.Enqueue("Application successful loaded");
+			this.SbMessageQueue.Enqueue("Application successfully loaded");
 		}
 
 		private void LoadMenuItems()
@@ -85,7 +85,7 @@ namespace DeepLinkR.Ui.ViewModels
 			{
 				new NavigationMenuItem()
 				{
-					Name = "Main",
+					Name = "Deeplinks",
 					Content = new MainViewModel(),
 					HorizontalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto,
 					VerticalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto,
