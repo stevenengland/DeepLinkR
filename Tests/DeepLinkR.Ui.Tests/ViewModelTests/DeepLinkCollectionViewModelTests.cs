@@ -21,7 +21,6 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 {
 	public class DeepLinkCollectionViewModelTests
 	{
-
 		[Fact]
 		public void VmIsSubscribedToEventAggregator()
 		{

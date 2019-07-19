@@ -93,10 +93,10 @@ namespace DeepLinkR.Ui.ViewModels
 				case DeepLinkSortOrder.Category:
 
 					var groupedDeepLinksByCategory = descendingSortOrder
-						? deepLinkMatches.GroupBy(match => new {match.DeepLinkCategoryName, match.DeepLinkKeyName,})
+						? deepLinkMatches.GroupBy(match => new { match.DeepLinkCategoryName, match.DeepLinkKeyName, })
 								.OrderByDescending(matches => matches.Key.DeepLinkCategoryName)
 								.ThenByDescending(matches => matches.Key.DeepLinkKeyName)
-						: deepLinkMatches.GroupBy(match => new {match.DeepLinkCategoryName, match.DeepLinkKeyName,})
+						: deepLinkMatches.GroupBy(match => new { match.DeepLinkCategoryName, match.DeepLinkKeyName, })
 								.OrderBy(matches => matches.Key.DeepLinkCategoryName)
 								.ThenBy(matches => matches.Key.DeepLinkKeyName)
 						;

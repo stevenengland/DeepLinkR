@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace DeepLinkR.Ui.Views
 {
 	/// <summary>
-	/// Interaction logic for ShellView.xaml
+	/// Interaction logic for ShellView.xaml.
 	/// </summary>
 	public partial class ShellView : Window
 	{
