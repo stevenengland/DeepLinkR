@@ -105,6 +105,12 @@ namespace DeepLinkR.Ui
 			this.simpleContainer.BuildUp(instance);
 		}
 
+		protected override void OnUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		{
+			// Todo: Write you custom code for handling Global unhandled excpetion of Dispatcher or UI thread.
+			base.OnUnhandledException(sender, e);
+		}
+
 		private ConfigurationCollection ReadConfiguration()
 		{
 			using (var streamReader = new StreamReader("config.json"))

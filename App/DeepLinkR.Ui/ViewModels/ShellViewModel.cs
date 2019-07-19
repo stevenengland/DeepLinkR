@@ -22,14 +22,28 @@ namespace DeepLinkR.Ui.ViewModels
 		private IClipboardManager clipboardManager;
 		private INHotkeyManagerMapper hotkeyManager;
 		private ISnackbarMessageQueue sbMessageQueue;
+		private IEventAggregator eventAggregator;
 		private bool isMenuBarVisible;
 		private WindowState curWindowState;
+		private MainViewModel mainViewModel;
+		private AboutViewModel aboutViewModel;
 
-		public ShellViewModel(IClipboardManager clipboardManager, INHotkeyManagerMapper hotkeyManager, ISnackbarMessageQueue snackbarMessageQueue)
+		public ShellViewModel(
+			IClipboardManager clipboardManager,
+			INHotkeyManagerMapper hotkeyManager,
+			ISnackbarMessageQueue snackbarMessageQueue,
+			IEventAggregator eventAggregator,
+			MainViewModel mainViewModel,
+			AboutViewModel aboutViewModel)
 		{
 			this.clipboardManager = clipboardManager;
 			this.hotkeyManager = hotkeyManager;
 			this.SbMessageQueue = snackbarMessageQueue;
+			this.eventAggregator = eventAggregator;
+			this.mainViewModel = mainViewModel;
+			this.aboutViewModel = aboutViewModel;
+
+			this.eventAggregator.Subscribe(this);
 
 			// LoadConfiguration
 			this.RegisterHotkey();
@@ -86,14 +100,14 @@ namespace DeepLinkR.Ui.ViewModels
 				new NavigationMenuItem()
 				{
 					Name = "Deeplinks",
-					Content = new MainViewModel(),
+					Content = this.mainViewModel,
 					HorizontalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto,
 					VerticalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto,
 				},
 				new NavigationMenuItem()
 				{
 					Name = "About",
-					Content = new AboutViewModel(),
+					Content = this.aboutViewModel,
 					HorizontalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto,
 					VerticalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto,
 				},
