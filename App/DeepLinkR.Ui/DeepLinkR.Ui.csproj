@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Events\DeepLinkMatchesUpdatedEvent.cs" />
+    <Compile Include="Events\ErrorEvent.cs" />
     <Compile Include="Events\HistoricalDeepLinkSelectedEvent.cs" />
     <Compile Include="Helper\Extensions\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\INHotkeyManagerMapper.cs" />

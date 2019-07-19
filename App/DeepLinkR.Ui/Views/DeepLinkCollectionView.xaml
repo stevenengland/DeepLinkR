@@ -74,7 +74,10 @@
 																<Button ToolTip="Copy to Clipboard"
 																        Width="48"
 																        Style="{DynamicResource MaterialDesignFlatButton}"
-																        HorizontalContentAlignment="Left">
+																        HorizontalContentAlignment="Left"
+																        Command="{Binding Path=DataContext.CopyLinkToClipboardCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DeepLinkCollectionView}}}"
+																        
+																        CommandParameter="{Binding Url}">
 
 																	<StackPanel Orientation="Horizontal">
 																		<materialDesign:PackIcon Kind="ClipboardOutline" />

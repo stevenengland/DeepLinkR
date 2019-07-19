@@ -10,5 +10,7 @@ namespace DeepLinkR.Core.Services.ClipboardManager
 	public interface IClipboardManager
 	{
 		event EventHandler<ClipboardTextUpdateEventArgs> ClipboardTextUpdateReceived;
+
+		void CopyTextToClipboard(string text);
 	}
 }

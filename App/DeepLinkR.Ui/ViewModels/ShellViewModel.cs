@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using DeepLinkR.Core.Helper.SyncCommand;
 using DeepLinkR.Core.Services.ClipboardManager;
+using DeepLinkR.Ui.Events;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Models;
 using MaterialDesignThemes.Wpf;
@@ -16,7 +17,7 @@ using NHotkey;
 
 namespace DeepLinkR.Ui.ViewModels
 {
-	public class ShellViewModel : Screen
+	public class ShellViewModel : Screen, IHandle<ErrorEvent>
 	{
 		private IClipboardManager clipboardManager;
 		private INHotkeyManagerMapper hotkeyManager;
@@ -65,6 +66,11 @@ namespace DeepLinkR.Ui.ViewModels
 				this.curWindowState = value;
 				this.NotifyOfPropertyChange(() => this.CurWindowState);
 			}
+		}
+
+		public void Handle(ErrorEvent message)
+		{
+			this.sbMessageQueue.Enqueue(message.ErrorMessage);
 		}
 
 		protected override void OnViewLoaded(object view)

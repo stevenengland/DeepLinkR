@@ -48,6 +48,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand ChangeDeepLinkSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeDeepLinkSortOrderDirection());
 
+		public ICommand CopyLinkToClipboardCommand => new SyncCommand<string>((arg) => this.OnCopyLinkToClipboard(arg));
+
 		public BindingList<DeepLinkMatchDisplayModel> DeepLinkMatchesDisplayModels
 		{
 			get => this.deepLinkMatchesDisplayModels;
@@ -182,6 +184,18 @@ namespace DeepLinkR.Ui.ViewModels
 				? DeepLinkSortOrder.Key
 				: DeepLinkSortOrder.Category;
 			this.Sideload(this.deepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
+		}
+
+		private void OnCopyLinkToClipboard(string text)
+		{
+			try
+			{
+				this.clipboardManager.CopyTextToClipboard(text);
+			}
+			catch (Exception e)
+			{
+				this.eventAggregator.PublishOnUIThread(new ErrorEvent(e, "Couldn't copy to clipboard :( Please try again."));
+			}
 		}
 	}
 }

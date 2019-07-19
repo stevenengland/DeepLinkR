@@ -191,6 +191,20 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			Assert.Equal("Key1", firstLevelOneItem.Name);
 		}
 
+		[Fact]
+		public void CopyingToClipboardIsHandled()
+		{
+			var mockObjects = this.GetMockObjects();
+			var clipboardManagerMock = Mock.Get((IClipboardManager)mockObjects[nameof(IClipboardManager)]);
+			clipboardManagerMock.Setup(x => x.CopyTextToClipboard(It.IsAny<string>())).Verifiable();
+
+			var vm = this.ViewModelFactory(mockObjects);
+
+			vm.CopyLinkToClipboardCommand.Execute("test");
+
+			clipboardManagerMock.Verify(x => x.CopyTextToClipboard(It.IsAny<string>()), Times.Once);
+		}
+
 		private Dictionary<string, object> GetMockObjects()
 		{
 			return new Dictionary<string, object>()
