@@ -8,6 +8,7 @@ using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
 using DeepLinkR.Core.Tests.MockedObjects;
 using DeepLinkR.Core.Types;
+using DeepLinkR.Core.Types.Enums;
 using DeepLinkR.Core.Types.EventArgs;
 using DeepLinkR.Ui.Events;
 using DeepLinkR.Ui.Tests.Mocks;
@@ -104,6 +105,38 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			Assert.Equal("Cat2", lastLevelOneItem.Name);
 			Assert.Equal("Key1", lastLevelOneItem.SecondLinkHierarchies.First().Name);
 			Assert.Equal("Key3", lastLevelOneItem.SecondLinkHierarchies.Last().Name);
+
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList, DeepLinkSortOrder.Category, true);
+
+			firstLevelOneItem = vm.HierarchicalLinks.First();
+			lastLevelOneItem = vm.HierarchicalLinks.Last();
+
+			Assert.Equal("Cat2", firstLevelOneItem.Name);
+			Assert.Equal("Key3", firstLevelOneItem.SecondLinkHierarchies.First().Name);
+			Assert.Equal("Key1", firstLevelOneItem.SecondLinkHierarchies.Last().Name);
+			Assert.Equal("Cat1", lastLevelOneItem.Name);
+			Assert.Equal("Key3", lastLevelOneItem.SecondLinkHierarchies.First().Name);
+			Assert.Equal("Key1", lastLevelOneItem.SecondLinkHierarchies.Last().Name);
+		}
+
+		[Fact]
+		public void ChangingSortOrderIsHandled()
+		{
+			var mockObjects = this.GetMockObjects();
+
+			var vm = this.ViewModelFactory(mockObjects);
+
+			vm.Sideload(MockedDeeplinkMatches.OrderTestList);
+
+			var firstLevelOneItem = vm.HierarchicalLinks.First();
+
+			Assert.Equal("Cat1", firstLevelOneItem.Name);
+
+			vm.ChangeSortOrderDirectionCommand.Execute(null);
+
+			firstLevelOneItem = vm.HierarchicalLinks.First();
+
+			Assert.Equal("Cat2", firstLevelOneItem.Name);
 		}
 
 		private Dictionary<string, object> GetMockObjects()

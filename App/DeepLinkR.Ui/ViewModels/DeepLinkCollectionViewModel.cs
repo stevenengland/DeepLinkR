@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using AutoMapper;
 using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
+using DeepLinkR.Core.Helper.SyncCommand;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
 using DeepLinkR.Core.Types;
@@ -26,6 +28,9 @@ namespace DeepLinkR.Ui.ViewModels
 		private IEventAggregator eventAggregator;
 		private BindingList<DeepLinkMatchDisplayModel> deepLinkMatchesDisplayModels;
 		private BindingList<HierarchyLevelOne> hierarchicalLinks;
+		private bool isDescendingSortOrder;
+		private DeepLinkSortOrder deepLinkSortOrder;
+		private List<DeepLinkMatch> deepLinkMatches;
 
 		public DeepLinkCollectionViewModel(IConfigurationCollection configurationCollection, IClipboardManager clipboardManager, IDeepLinkManager deepLinkManager, IMapper mapper, IEventAggregator eventAggregator)
 		{
@@ -38,6 +43,8 @@ namespace DeepLinkR.Ui.ViewModels
 			this.clipboardManager.ClipboardTextUpdateReceived += this.OnClipboardTextUpdateReceived;
 			this.eventAggregator.Subscribe(this);
 		}
+
+		public ICommand ChangeSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeSortOrderDirection());
 
 		public BindingList<DeepLinkMatchDisplayModel> DeepLinkMatchesDisplayModels
 		{
@@ -59,29 +66,36 @@ namespace DeepLinkR.Ui.ViewModels
 			}
 		}
 
-		public void Sideload(List<DeepLinkMatch> deepLinkMatches)
+		public void Sideload(List<DeepLinkMatch> deepLinkMatches, DeepLinkSortOrder deepLinkSortOrder = DeepLinkSortOrder.Category, bool descendingSortOrder = false)
 		{
 			// this.DeepLinkMatchesDisplayModels = new BindingList<DeepLinkMatchDisplayModel>(this.mapper.Map<List<DeepLinkMatchDisplayModel>>(deepLinkMatches));
 
 			// this.HierarchicalLinks = this.CreateSortedHierarchy(this.DeepLinkMatchesDisplayModels, deepLinkSortOrder.Category);
-			this.HierarchicalLinks = new BindingList<HierarchyLevelOne>(this.CreateSortedHierarchy(deepLinkMatches, DeepLinkSortOrder.Category));
+			this.deepLinkMatches = deepLinkMatches;
+			this.HierarchicalLinks = new BindingList<HierarchyLevelOne>(this.CreateSortedHierarchy(this.deepLinkMatches, deepLinkSortOrder, descendingSortOrder));
 		}
 
 		public void Handle(HistoricalDeepLinkSelectedEvent message)
 		{
-			this.Sideload(message.DeepLinkMatches);
+			this.Sideload(message.DeepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
 		}
 
-		private List<HierarchyLevelOne> CreateSortedHierarchy(List<DeepLinkMatch> deepLinkMatches, DeepLinkSortOrder deepLinkSortOrder)
+		private List<HierarchyLevelOne> CreateSortedHierarchy(List<DeepLinkMatch> deepLinkMatches, DeepLinkSortOrder deepLinkSortOrder, bool descendingSortOrder)
 		{
 			var levelOneList = new List<HierarchyLevelOne>();
 
 			switch (deepLinkSortOrder)
 			{
 				case DeepLinkSortOrder.Category:
-					var groupedDeepLinks = deepLinkMatches.GroupBy(match => new { match.DeepLinkCategoryName, match.DeepLinkKeyName, })
-						.OrderBy(matches => matches.Key.DeepLinkCategoryName)
-						.ThenBy(matches => matches.Key.DeepLinkKeyName);
+
+					var groupedDeepLinks = descendingSortOrder
+						? deepLinkMatches.GroupBy(match => new {match.DeepLinkCategoryName, match.DeepLinkKeyName,})
+								.OrderByDescending(matches => matches.Key.DeepLinkCategoryName)
+								.ThenByDescending(matches => matches.Key.DeepLinkKeyName)
+						: deepLinkMatches.GroupBy(match => new {match.DeepLinkCategoryName, match.DeepLinkKeyName,})
+								.OrderBy(matches => matches.Key.DeepLinkCategoryName)
+								.ThenBy(matches => matches.Key.DeepLinkKeyName)
+						;
 
 					foreach (var group in groupedDeepLinks)
 					{
@@ -122,6 +136,12 @@ namespace DeepLinkR.Ui.ViewModels
 				this.Sideload(deepLinkMatches);
 				this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches));
 			}
+		}
+
+		private void OnChangeSortOrderDirection()
+		{
+			this.isDescendingSortOrder = !this.isDescendingSortOrder;
+			this.Sideload(this.deepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
 		}
 	}
 }
