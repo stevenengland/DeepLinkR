@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeepLinkR.Core.Configuration
+namespace DeepLinkR.Ui.Tests.ViewModelTests
 {
-	public interface IAppConfiguration
+	public class MainViewModelTests
 	{
-		IBrowserConfiguration BrowserConfiguration { get; }
 	}
 }

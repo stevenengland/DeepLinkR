@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeepLinkR.Core.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace DeepLinkR.Core.Configuration
 {
 	[JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-	public class AppConfiguration : IAppConfiguration
+	public class BrowserConfiguration : IBrowserConfiguration
 	{
 		[JsonConstructor]
-		public AppConfiguration(BrowserConfiguration browserConfiguration)
+		public BrowserConfiguration()
 		{
-			this.BrowserConfiguration = browserConfiguration;
 		}
 
 		[JsonProperty(Required = Required.Always)]
-		public IBrowserConfiguration BrowserConfiguration { get; set; }
+		public List<BrowserDefinition> BrowserDefinitions { get; }
 	}
 }

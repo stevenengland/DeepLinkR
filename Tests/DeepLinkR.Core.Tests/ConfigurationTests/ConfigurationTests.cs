@@ -33,6 +33,7 @@ namespace DeepLinkR.Core.Tests.ConfigurationTests
 			// Because Config consists of interfaces and needs constructor injection, check if the interfaces are filled.
 			Assert.NotNull(this.config.DeepLinkConfiguration);
 			Assert.NotNull(this.config.AppConfiguration);
+			Assert.NotNull(this.config.AppConfiguration.BrowserConfiguration);
 
 			// The rest is controlled via Json Required attribute->Missing or false config leads to an exception.
 		}

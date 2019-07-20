@@ -71,9 +71,11 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\BrowserConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
     <Compile Include="Configuration\DeepLinkConfiguration.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Configuration\IBrowserConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationCollection.cs" />
     <Compile Include="Configuration\IDeepLinkConfiguration.cs" />
     <Compile Include="Helper\AsyncCommand\AsyncCommand.cs" />
@@ -83,10 +85,13 @@
     <Compile Include="Helper\SyncCommand\ISyncCommand.cs" />
     <Compile Include="Helper\SyncCommand\SyncCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BrowserManager\BrowserManager.cs" />
+    <Compile Include="Services\BrowserManager\IBrowserManager.cs" />
     <Compile Include="Services\ClipboardManager\ClipboardManager.cs" />
     <Compile Include="Services\ClipboardManager\IClipboardManager.cs" />
     <Compile Include="Services\DeepLinkManager\DeepLinkManager.cs" />
     <Compile Include="Services\DeepLinkManager\IDeepLinkManager.cs" />
+    <Compile Include="Types\BrowserDefinition.cs" />
     <Compile Include="Types\DeepLink.cs" />
     <Compile Include="Types\DeepLinkCategory.cs" />
     <Compile Include="Types\DeepLinkKey.cs" />

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeepLinkR.Core.Types;
 
 namespace DeepLinkR.Core.Configuration
 {
-	public interface IAppConfiguration
+	public interface IBrowserConfiguration
 	{
-		IBrowserConfiguration BrowserConfiguration { get; }
+		List<BrowserDefinition> BrowserDefinitions { get; }
 	}
 }

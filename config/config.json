@@ -46,6 +46,19 @@
 		]
 	},
 	"appConfiguration": {
-		"settingKey": "ApplicationSettings"
+		"browserConfiguration": {
+			"browserDefinitions": [
+				{
+					"name": "Chrome",
+					"PathToExecutable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+					"IsDefault": true
+				},
+				{
+					"name": "Chrome private",
+					"PathToExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+					"CommandlineArguments": "–-incognito {url}"
+				}
+			]
+		}
 	}
 }
