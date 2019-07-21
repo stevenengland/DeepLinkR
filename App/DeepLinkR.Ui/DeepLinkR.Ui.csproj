@@ -100,6 +100,8 @@
     <Compile Include="Events\ErrorEvent.cs" />
     <Compile Include="Events\HistoricalDeepLinkSelectedEvent.cs" />
     <Compile Include="Helper\Extensions\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="Helper\LibraryMapper\DialogHostMapper\DialogHostMapper.cs" />
+    <Compile Include="Helper\LibraryMapper\DialogHostMapper\IDialogHostMapper.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\INHotkeyManagerMapper.cs" />
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\NHotkeyManagerMapper.cs" />
     <Compile Include="Models\DeepLinkMatchDisplayModel.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\DeepLinkCollectionViewModel.cs" />
     <Compile Include="ViewModels\DeepLinkHistoryViewModel.cs" />
+    <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -121,6 +124,9 @@
     </Compile>
     <Compile Include="Views\DeepLinkHistoryView.xaml.cs">
       <DependentUpon>DeepLinkHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -167,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DeepLinkHistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,19 +10,22 @@ using Caliburn.Micro;
 using DeepLinkR.Core.Helper.SyncCommand;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Ui.Events;
+using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Models;
+using DeepLinkR.Ui.Views;
 using MaterialDesignThemes.Wpf;
 using NHotkey;
 
 namespace DeepLinkR.Ui.ViewModels
 {
-	public class ShellViewModel : Screen, IHandle<ErrorEvent>
+	public class ShellViewModel : Screen, IHandleWithTask<ErrorEvent>
 	{
 		private IClipboardManager clipboardManager;
 		private INHotkeyManagerMapper hotkeyManager;
 		private ISnackbarMessageQueue sbMessageQueue;
 		private IEventAggregator eventAggregator;
+		private IDialogHostMapper dialogHostMapper;
 		private bool isMenuBarVisible;
 		private WindowState curWindowState;
 		private MainViewModel mainViewModel;
@@ -33,6 +36,7 @@ namespace DeepLinkR.Ui.ViewModels
 			INHotkeyManagerMapper hotkeyManager,
 			ISnackbarMessageQueue snackbarMessageQueue,
 			IEventAggregator eventAggregator,
+			IDialogHostMapper dialogHostMapper,
 			MainViewModel mainViewModel,
 			AboutViewModel aboutViewModel)
 		{
@@ -40,6 +44,7 @@ namespace DeepLinkR.Ui.ViewModels
 			this.hotkeyManager = hotkeyManager;
 			this.SbMessageQueue = snackbarMessageQueue;
 			this.eventAggregator = eventAggregator;
+			this.dialogHostMapper = dialogHostMapper;
 			this.mainViewModel = mainViewModel;
 			this.aboutViewModel = aboutViewModel;
 
@@ -82,9 +87,16 @@ namespace DeepLinkR.Ui.ViewModels
 			}
 		}
 
-		public void Handle(ErrorEvent message)
+		public async Task Handle(ErrorEvent message)
 		{
-			this.sbMessageQueue.Enqueue(message.ErrorMessage);
+			// var view = new ErrorView()
+			// {
+			// DataContext = new ErrorViewModel(message.ErrorMessage),
+			// };
+			// var result = await this.dialogHostMapper.Show(view, "RootDialog");
+
+			// ToDo: Log the Exception
+			var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(message.ErrorMessage), "RootDialog");
 		}
 
 		protected override void OnViewLoaded(object view)

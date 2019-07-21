@@ -8,6 +8,7 @@ using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.ViewModels;
 using MaterialDesignThemes.Wpf;
@@ -24,6 +25,7 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				(INHotkeyManagerMapper)mockObjects[nameof(INHotkeyManagerMapper)],
 				(ISnackbarMessageQueue)mockObjects[nameof(ISnackbarMessageQueue)],
 				(IEventAggregator)mockObjects[nameof(IEventAggregator)],
+				(IDialogHostMapper)mockObjects[nameof(IDialogHostMapper)],
 				new MainViewModel( // ToDo Factorize
 					MockFactories.DeepLinkCollectionViewModelFactory(GetMockObjects()),
 					MockFactories.DeepLinkHistoryViewModelFactory(GetMockObjects())),
@@ -57,6 +59,7 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				{ nameof(IEventAggregator), MockFactories.GetEventAggregator() },
 				{ nameof(INHotkeyManagerMapper), MockFactories.GetINHotkeyManagerMapper() },
 				{ nameof(ISnackbarMessageQueue), MockFactories.GetISnackbarMessageQueue() },
+				{ nameof(IDialogHostMapper), MockFactories.GetIDialogHostMapper() },
 			};
 		}
 
@@ -93,6 +96,11 @@ namespace DeepLinkR.Ui.Tests.Mocks
 		public static INHotkeyManagerMapper GetINHotkeyManagerMapper()
 		{
 			return new Mock<INHotkeyManagerMapper>().Object;
+		}
+
+		public static IDialogHostMapper GetIDialogHostMapper()
+		{
+			return new Mock<IDialogHostMapper>().Object;
 		}
 	}
 }

@@ -27,7 +27,8 @@ namespace DeepLinkR.Core.Services.BrowserManager
 
 		private void DetectDefaultBrowserDefinition()
 		{
-
+			this.defaultBrowserDefinition =
+				this.browserConfiguration.BrowserDefinitions.FirstOrDefault(x => x.IsDefault) ?? this.browserConfiguration.BrowserDefinitions.First();
 		}
 	}
 }

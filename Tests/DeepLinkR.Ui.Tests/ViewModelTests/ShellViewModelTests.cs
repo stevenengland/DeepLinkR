@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
 using DeepLinkR.Ui.Events;
+using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Tests.Mocks;
 using MaterialDesignThemes.Wpf;
@@ -40,15 +42,15 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 		}
 
 		[Fact]
-		public void ErrorEventsAreHandled()
+		public async Task ErrorEventsAreHandled()
 		{
 			var mockObjects = MockFactories.GetMockObjects();
-			var snackbarMessageQueue = Mock.Get((ISnackbarMessageQueue)mockObjects[nameof(ISnackbarMessageQueue)]);
+			var dialogHostMapper = Mock.Get((IDialogHostMapper)mockObjects[nameof(IDialogHostMapper)]);
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 
-			vm.Handle(new ErrorEvent(new Exception(), "test"));
+			await vm.Handle(new ErrorEvent(new Exception(), "test"));
 
-			snackbarMessageQueue.Verify(x => x.Enqueue(It.IsAny<object>()), Times.Once);
+			dialogHostMapper.Verify(x => x.Show(It.IsAny<object>(), It.IsAny<object>()), Times.Once);
 		}
 
 		[Fact]

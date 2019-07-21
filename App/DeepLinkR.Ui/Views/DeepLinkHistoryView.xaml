@@ -15,6 +15,7 @@
 			<StackPanel Margin="24,8,24,16">
 				<TextBlock>Entry</TextBlock>
 				<TextBox>pattern1</TextBox>
+				<Button Command="{Binding TestCommand}">Test</Button>
 			</StackPanel>
 		</materialDesign:Card>
 	</StackPanel>

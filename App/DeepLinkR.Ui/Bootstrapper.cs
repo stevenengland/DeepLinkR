@@ -12,6 +12,7 @@ using DeepLinkR.Core.Configuration;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
 using DeepLinkR.Core.Types;
+using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Models;
 using DeepLinkR.Ui.ViewModels;
@@ -63,7 +64,8 @@ namespace DeepLinkR.Ui
 				.Singleton<INHotkeyManagerMapper, NHotkeyManagerMapper>()
 				.Instance<IConfigurationCollection>(this.ConfigurationCollection)
 				.Instance<IDeepLinkManager>(this.DeepLinkManager)
-				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue);
+				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue)
+				.PerRequest<IDialogHostMapper, DialogHostMapper>();
 
 			// Registers every ViewModel to the container
 			this.GetType().Assembly.GetTypes()
@@ -109,6 +111,10 @@ namespace DeepLinkR.Ui
 		{
 			// Todo: Write you custom code for handling Global unhandled excpetion of Dispatcher or UI thread.
 			base.OnUnhandledException(sender, e);
+
+			// DialogHost.Show()
+			// MessageBox.Show(e.Exception.Message, "An error as occurred", MessageBoxButton.OK);
+			// e.Handled = true;
 		}
 
 		private ConfigurationCollection ReadConfiguration()
