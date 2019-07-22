@@ -84,6 +84,8 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 
 			deeplinkManagerMock.Verify(x => x.GetDeepLinkMatches(It.IsAny<string>()), Times.Exactly(1));
 			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(1));
+
+			Assert.Equal("test", vm.CurrentMatchName);
 		}
 
 		[Fact]

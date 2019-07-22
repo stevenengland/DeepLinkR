@@ -34,6 +34,7 @@ namespace DeepLinkR.Ui.ViewModels
 		private DeepLinkSortOrder deepLinkSortOrder;
 		private List<DeepLinkMatch> deepLinkMatches;
 		private IBrowserManager browserManager;
+		private string currentMatchName;
 
 		public DeepLinkCollectionViewModel(
 			IConfigurationCollection configurationCollection,
@@ -52,6 +53,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 			this.clipboardManager.ClipboardTextUpdateReceived += this.OnClipboardTextUpdateReceived;
 			this.eventAggregator.Subscribe(this);
+
+			this.currentMatchName = "-";
 		}
 
 		public ICommand ChangeSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeSortOrderDirection());
@@ -79,6 +82,16 @@ namespace DeepLinkR.Ui.ViewModels
 			{
 				this.hierarchicalLinks = value;
 				this.NotifyOfPropertyChange(() => this.HierarchicalLinks);
+			}
+		}
+
+		public string CurrentMatchName
+		{
+			get => this.currentMatchName;
+			set
+			{
+				this.currentMatchName = value;
+				this.NotifyOfPropertyChange(() => this.CurrentMatchName);
 			}
 		}
 
@@ -179,6 +192,7 @@ namespace DeepLinkR.Ui.ViewModels
 			var deepLinkMatches = this.deepLinkManager.GetDeepLinkMatches(e.ClipboardText);
 			if (deepLinkMatches?.Count > 0)
 			{
+				this.CurrentMatchName = e.ClipboardText;
 				this.Sideload(deepLinkMatches);
 				this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches));
 			}
