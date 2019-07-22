@@ -95,6 +95,11 @@
 								<Button Content="Nice Popup" />
 								<Separator/>-->
 								<Button Content="Send App to Tray"/>
+								<Button Content="Minimize"
+								        Command="{Binding MinimizeAppCommand}"/>
+								<Button Content="Maximize"
+								        Command="{Binding MaximizeAppCommand}"/>
+								<Separator/>
 								<Button Content="Exit App"
 								        Command="{Binding ExitAppCommand}"/>
 							</StackPanel>

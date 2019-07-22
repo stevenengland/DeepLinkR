@@ -61,6 +61,10 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand ExitAppCommand => new SyncCommand(() => this.OnExitApp());
 
+		public ICommand MinimizeAppCommand => new SyncCommand(() => this.OnMinimizeApp());
+
+		public ICommand MaximizeAppCommand => new SyncCommand(() => this.OnMaximizeApp());
+
 		public ICommand TitleBarDoubleClickedCommand => new SyncCommand(() => this.OnTitleBarDoubleClicked());
 
 		public ISnackbarMessageQueue SbMessageQueue { get => this.sbMessageQueue; private set => this.sbMessageQueue = value; }
@@ -144,6 +148,16 @@ namespace DeepLinkR.Ui.ViewModels
 		private void OnTitleBarDoubleClicked()
 		{
 			this.CurWindowState = this.CurWindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
+		}
+
+		private void OnMinimizeApp()
+		{
+			this.CurWindowState = WindowState.Minimized;
+		}
+
+		private void OnMaximizeApp()
+		{
+			this.CurWindowState = WindowState.Maximized;
 		}
 
 		private void OnExitApp()

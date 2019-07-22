@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
 using DeepLinkR.Ui.Events;
@@ -77,6 +78,30 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			vm.TitleBarDoubleClickedCommand.Execute(null);
 
 			Assert.NotEqual(curState, vm.CurWindowState);
+		}
+
+		[Fact]
+		public void WindowGetsMaximized()
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+
+			var vm = MockFactories.ShellViewModelFactory(mockObjects);
+
+			vm.MaximizeAppCommand.Execute(null);
+
+			Assert.Equal(WindowState.Maximized, vm.CurWindowState);
+		}
+
+		[Fact]
+		public void WindowGetsMinimized()
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+
+			var vm = MockFactories.ShellViewModelFactory(mockObjects);
+
+			vm.MinimizeAppCommand.Execute(null);
+
+			Assert.Equal(WindowState.Minimized, vm.CurWindowState);
 		}
 	}
 }

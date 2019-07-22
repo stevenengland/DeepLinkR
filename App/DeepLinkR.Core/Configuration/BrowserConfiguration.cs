@@ -18,6 +18,6 @@ namespace DeepLinkR.Core.Configuration
 		}
 
 		[JsonProperty(Required = Required.Always)]
-		public List<BrowserDefinition> BrowserDefinitions { get; }
+		public List<BrowserDefinition> BrowserDefinitions { get; private set; }
 	}
 }

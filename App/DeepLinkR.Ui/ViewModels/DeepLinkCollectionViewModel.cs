@@ -9,8 +9,10 @@ using AutoMapper;
 using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
 using DeepLinkR.Core.Helper.SyncCommand;
+using DeepLinkR.Core.Services.BrowserManager;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Core.Services.ProcessProxy;
 using DeepLinkR.Core.Types;
 using DeepLinkR.Core.Types.Enums;
 using DeepLinkR.Core.Types.EventArgs;
@@ -31,14 +33,22 @@ namespace DeepLinkR.Ui.ViewModels
 		private bool isDescendingSortOrder;
 		private DeepLinkSortOrder deepLinkSortOrder;
 		private List<DeepLinkMatch> deepLinkMatches;
+		private IBrowserManager browserManager;
 
-		public DeepLinkCollectionViewModel(IConfigurationCollection configurationCollection, IClipboardManager clipboardManager, IDeepLinkManager deepLinkManager, IMapper mapper, IEventAggregator eventAggregator)
+		public DeepLinkCollectionViewModel(
+			IConfigurationCollection configurationCollection,
+			IClipboardManager clipboardManager,
+			IDeepLinkManager deepLinkManager,
+			IMapper mapper,
+			IEventAggregator eventAggregator,
+			IBrowserManager browserManager)
 		{
 			this.clipboardManager = clipboardManager;
 			this.configurationCollection = configurationCollection;
 			this.deepLinkManager = deepLinkManager;
 			this.mapper = mapper;
 			this.eventAggregator = eventAggregator;
+			this.browserManager = browserManager;
 
 			this.clipboardManager.ClipboardTextUpdateReceived += this.OnClipboardTextUpdateReceived;
 			this.eventAggregator.Subscribe(this);
@@ -49,6 +59,8 @@ namespace DeepLinkR.Ui.ViewModels
 		public ICommand ChangeDeepLinkSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeDeepLinkSortOrderDirection());
 
 		public ICommand CopyLinkToClipboardCommand => new SyncCommand<string>((arg) => this.OnCopyLinkToClipboard(arg));
+
+		public ICommand OpenWithDefaultBrowserCommand => new SyncCommand<string>((arg) => this.OnOpenWithDefaultBrowser(arg));
 
 		public BindingList<DeepLinkMatchDisplayModel> DeepLinkMatchesDisplayModels
 		{
@@ -196,6 +208,12 @@ namespace DeepLinkR.Ui.ViewModels
 			{
 				this.eventAggregator.PublishOnUIThread(new ErrorEvent(e, "Couldn't copy to clipboard :( Please try again."));
 			}
+		}
+
+		private void OnOpenWithDefaultBrowser(string url)
+		{
+			// ToDo: TryCatch
+			this.browserManager.OpenWithDefaultBrowser(url);
 		}
 	}
 }

@@ -46,17 +46,25 @@
 		]
 	},
 	"appConfiguration": {
+		"clipboardConfiguration": {
+			"automaticTrim": true,
+			"processMultipleRows": false 
+		},
+		"debugConfiguration": {
+			"IsLoggingEnabled": false,
+			"logLevel": "trace"
+		},
 		"browserConfiguration": {
 			"browserDefinitions": [
 				{
 					"name": "Chrome",
-					"PathToExecutable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-					"IsDefault": true
+					"pathToExecutable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+					"isDefault": true
 				},
 				{
 					"name": "Chrome private",
-					"PathToExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
-					"CommandlineArguments": "–-incognito {url}"
+					"pathToExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+					"commandlineArguments": "–-incognito {url}"
 				}
 			]
 		}

@@ -18,8 +18,10 @@ namespace DeepLinkR.Core.Configuration
 			this.AppConfiguration = appConfiguration;
 		}
 
+		[JsonProperty(Required = Required.Always)]
 		public IAppConfiguration AppConfiguration { get; set; }
 
+		[JsonProperty(Required = Required.Always)]
 		public IDeepLinkConfiguration DeepLinkConfiguration { get; set; }
 	}
 }

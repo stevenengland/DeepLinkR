@@ -62,7 +62,9 @@
 																<Button ToolTip="{Binding Url}"
 																        Width="250"
 																        Style="{DynamicResource MaterialDesignFlatButton}"
-																        HorizontalContentAlignment="Left">
+																        HorizontalContentAlignment="Left"
+																        Command="{Binding Path=DataContext.OpenWithDefaultBrowserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DeepLinkCollectionView}}}"
+																        CommandParameter="{Binding Url}">
 
 																	<StackPanel Orientation="Horizontal">
 																		<materialDesign:PackIcon Kind="LinkVariant" />

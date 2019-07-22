@@ -91,6 +91,8 @@
     <Compile Include="Services\ClipboardManager\IClipboardManager.cs" />
     <Compile Include="Services\DeepLinkManager\DeepLinkManager.cs" />
     <Compile Include="Services\DeepLinkManager\IDeepLinkManager.cs" />
+    <Compile Include="Services\ProcessProxy\IProcessProxy.cs" />
+    <Compile Include="Services\ProcessProxy\ProcessProxy.cs" />
     <Compile Include="Types\BrowserDefinition.cs" />
     <Compile Include="Types\DeepLink.cs" />
     <Compile Include="Types\DeepLinkCategory.cs" />

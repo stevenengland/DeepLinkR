@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
+using DeepLinkR.Core.Services.BrowserManager;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
 using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
@@ -40,7 +41,9 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				(IClipboardManager)mockObjects[nameof(IClipboardManager)],
 				(IDeepLinkManager)mockObjects[nameof(IDeepLinkManager)],
 				(IMapper)mockObjects[nameof(IMapper)],
-				(IEventAggregator)mockObjects[nameof(IEventAggregator)]);
+				(IEventAggregator)mockObjects[nameof(IEventAggregator)],
+				(IBrowserManager)mockObjects[nameof(IBrowserManager)])
+			;
 		}
 
 		public static DeepLinkHistoryViewModel DeepLinkHistoryViewModelFactory(Dictionary<string, object> mockObjects)
@@ -60,6 +63,7 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				{ nameof(INHotkeyManagerMapper), MockFactories.GetINHotkeyManagerMapper() },
 				{ nameof(ISnackbarMessageQueue), MockFactories.GetISnackbarMessageQueue() },
 				{ nameof(IDialogHostMapper), MockFactories.GetIDialogHostMapper() },
+				{ nameof(IBrowserManager), MockFactories.GetBrowserManager() },
 			};
 		}
 
@@ -101,6 +105,11 @@ namespace DeepLinkR.Ui.Tests.Mocks
 		public static IDialogHostMapper GetIDialogHostMapper()
 		{
 			return new Mock<IDialogHostMapper>().Object;
+		}
+
+		public static IBrowserManager GetBrowserManager()
+		{
+			return new Mock<IBrowserManager>().Object;
 		}
 	}
 }

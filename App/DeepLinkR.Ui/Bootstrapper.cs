@@ -9,8 +9,10 @@ using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
+using DeepLinkR.Core.Services.BrowserManager;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Core.Services.ProcessProxy;
 using DeepLinkR.Core.Types;
 using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
@@ -65,6 +67,7 @@ namespace DeepLinkR.Ui
 				.Instance<IConfigurationCollection>(this.ConfigurationCollection)
 				.Instance<IDeepLinkManager>(this.DeepLinkManager)
 				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue)
+				.Instance<IBrowserManager>(new BrowserManager(this.ConfigurationCollection.AppConfiguration.BrowserConfiguration, new ProcessProxy()))
 				.PerRequest<IDialogHostMapper, DialogHostMapper>();
 
 			// Registers every ViewModel to the container
