@@ -201,7 +201,7 @@ namespace DeepLinkR.Ui.ViewModels
 						this.Sideload(deepLinkMatches);
 					}
 
-					this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches));
+					this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches, clipboardEntries[i]));
 				}
 			}
 		}

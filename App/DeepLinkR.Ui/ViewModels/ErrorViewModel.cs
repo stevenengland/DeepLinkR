@@ -15,7 +15,8 @@ namespace DeepLinkR.Ui.ViewModels
 	    {
 	    }
 
-	    public string ErrorMessage {
+	    public string ErrorMessage
+	    {
 		    get => this.errorMessage;
 		    set
 		    {

@@ -43,7 +43,7 @@ namespace DeepLinkR.Core.Tests.Mocks
 			};
 		}
 
-		private static IBrowserConfiguration GetBrowserConfiguration()
+		public static IBrowserConfiguration GetBrowserConfiguration()
 		{
 			return new Mock<IBrowserConfiguration>().Object;
 		}

@@ -58,8 +58,7 @@ namespace DeepLinkR.Core.Services.ClipboardManager
 					{
 						entries = text.Split(
 							new[] { Environment.NewLine },
-							StringSplitOptions.None
-						);
+							StringSplitOptions.None);
 					}
 					else
 					{

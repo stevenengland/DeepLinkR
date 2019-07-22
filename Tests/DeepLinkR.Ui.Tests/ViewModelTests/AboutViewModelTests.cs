@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeepLinkR.Ui.Tests.ViewModelTests
 {
-	class AboutViewModelTests
+	public class AboutViewModelTests
 	{
 	}
 }

@@ -50,7 +50,7 @@ namespace DeepLinkR.Ui.Tests
 				{
 					return (T)base.GetInstance(typeof(T), null);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					this.WhatDoIHave();
 					throw;

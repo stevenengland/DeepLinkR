@@ -30,8 +30,7 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				new MainViewModel( // ToDo Factorize
 					MockFactories.DeepLinkCollectionViewModelFactory(GetMockObjects()),
 					MockFactories.DeepLinkHistoryViewModelFactory(GetMockObjects())),
-				new AboutViewModel()
-			);
+				new AboutViewModel());
 		}
 
 		public static DeepLinkCollectionViewModel DeepLinkCollectionViewModelFactory(Dictionary<string, object> mockObjects)

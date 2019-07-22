@@ -85,7 +85,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 		{
 			var mockObjects = MockFactories.GetMockObjects();
 			var proxyMock = Mock.Get((IProcessProxy)mockObjects[nameof(IProcessProxy)]);
-			var browserConfig = Mock.Get((IBrowserConfiguration) mockObjects[nameof(IBrowserConfiguration)]);
+			var browserConfig = Mock.Get((IBrowserConfiguration)mockObjects[nameof(IBrowserConfiguration)]);
 			browserConfig.SetupGet(x => x.BrowserDefinitions).Returns(MockedBrowserDefinitions.BrowserDefinitions);
 
 			var browserManager = MockFactories.BrowserManagerFactory(mockObjects);
