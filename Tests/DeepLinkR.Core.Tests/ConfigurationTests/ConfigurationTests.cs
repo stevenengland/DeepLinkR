@@ -34,6 +34,7 @@ namespace DeepLinkR.Core.Tests.ConfigurationTests
 			Assert.NotNull(this.config.DeepLinkConfiguration);
 			Assert.NotNull(this.config.AppConfiguration);
 			Assert.NotNull(this.config.AppConfiguration.BrowserConfiguration);
+			Assert.NotNull(this.config.AppConfiguration.ClipboardConfiguration);
 
 			// The rest is controlled via Json Required attribute->Missing or false config leads to an exception.
 		}

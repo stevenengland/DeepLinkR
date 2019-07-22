@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DeepLinkR.Core.Configuration
 {
-	public interface IAppConfiguration
+	public interface IClipboardConfiguration
 	{
-		IBrowserConfiguration BrowserConfiguration { get; }
+		bool AutomaticTrim { get; }
 
-		IClipboardConfiguration ClipboardConfiguration { get; }
+		bool ProcessMultipleRows { get; }
 	}
 }

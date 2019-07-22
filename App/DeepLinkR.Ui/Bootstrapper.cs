@@ -9,6 +9,8 @@ using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using DeepLinkR.Core.Configuration;
+using DeepLinkR.Core.Helper.LibraryMapper.SharpClipboardMapper;
+using DeepLinkR.Core.Helper.LibraryMapper.TextCopyMapper;
 using DeepLinkR.Core.Services.BrowserManager;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
@@ -36,6 +38,8 @@ namespace DeepLinkR.Ui
 
 		private IDeepLinkManager DeepLinkManager { get; set; }
 
+		private IClipboardManager ClipboardManager { get; set; }
+
 		private ISnackbarMessageQueue SbMessageQueue { get; set; }
 
 		protected override void Configure()
@@ -44,6 +48,11 @@ namespace DeepLinkR.Ui
 			this.ConfigurationCollection = this.ReadConfiguration();
 
 			this.DeepLinkManager = new DeepLinkManager(this.ConfigurationCollection.DeepLinkConfiguration);
+
+			this.ClipboardManager = new ClipboardManager(
+				this.ConfigurationCollection.AppConfiguration.ClipboardConfiguration,
+				new SharpClipboardMapper(),
+				new TextCopyMapper());
 
 			var mapperConfiguration = new MapperConfiguration(cfg =>
 			{
@@ -62,9 +71,9 @@ namespace DeepLinkR.Ui
 			this.simpleContainer
 				.Singleton<IWindowManager, WindowManager>()
 				.Singleton<IEventAggregator, EventAggregator>()
-				.Singleton<IClipboardManager, ClipboardManager>()
 				.Singleton<INHotkeyManagerMapper, NHotkeyManagerMapper>()
 				.Instance<IConfigurationCollection>(this.ConfigurationCollection)
+				.Instance<IClipboardManager>(this.ClipboardManager)
 				.Instance<IDeepLinkManager>(this.DeepLinkManager)
 				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue)
 				.Instance<IBrowserManager>(new BrowserManager(this.ConfigurationCollection.AppConfiguration.BrowserConfiguration, new ProcessProxy()))

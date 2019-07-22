@@ -189,12 +189,20 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void OnClipboardTextUpdateReceived(object sender, ClipboardTextUpdateEventArgs e)
 		{
-			var deepLinkMatches = this.deepLinkManager.GetDeepLinkMatches(e.ClipboardText);
-			if (deepLinkMatches?.Count > 0)
+			var clipboardEntries = e.ClipboardEntries;
+			for (int i = clipboardEntries.Length - 1; i >= 0; i--)
 			{
-				this.CurrentMatchName = e.ClipboardText;
-				this.Sideload(deepLinkMatches);
-				this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches));
+				var deepLinkMatches = this.deepLinkManager.GetDeepLinkMatches(clipboardEntries[i]);
+				if (deepLinkMatches?.Count > 0)
+				{
+					if (i == 0)
+					{
+						this.CurrentMatchName = clipboardEntries[i];
+						this.Sideload(deepLinkMatches);
+					}
+
+					this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches));
+				}
 			}
 		}
 

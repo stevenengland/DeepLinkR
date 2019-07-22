@@ -60,7 +60,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 
 			var vm = MockFactories.DeepLinkCollectionViewModelFactory(mockObjects);
 
-			clipboardManagerMock.Raise(x => x.ClipboardTextUpdateReceived += null, this, new ClipboardTextUpdateEventArgs("test"));
+			clipboardManagerMock.Raise(x => x.ClipboardTextUpdateReceived += null, this, new ClipboardTextUpdateEventArgs(new[] { "test" }));
 
 			deeplinkManagerMock.Verify(x => x.GetDeepLinkMatches(It.IsAny<string>()), Times.Exactly(1));
 			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(0));
@@ -80,7 +80,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 
 			var vm = MockFactories.DeepLinkCollectionViewModelFactory(mockObjects);
 
-			clipboardManagerMock.Raise(x => x.ClipboardTextUpdateReceived += null, this, new ClipboardTextUpdateEventArgs("test"));
+			clipboardManagerMock.Raise(x => x.ClipboardTextUpdateReceived += null, this, new ClipboardTextUpdateEventArgs(new[] { "test" }));
 
 			deeplinkManagerMock.Verify(x => x.GetDeepLinkMatches(It.IsAny<string>()), Times.Exactly(1));
 			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(1));

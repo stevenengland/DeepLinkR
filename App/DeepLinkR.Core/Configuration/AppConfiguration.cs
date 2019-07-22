@@ -12,12 +12,18 @@ namespace DeepLinkR.Core.Configuration
 	public class AppConfiguration : IAppConfiguration
 	{
 		[JsonConstructor]
-		public AppConfiguration(BrowserConfiguration browserConfiguration)
+		public AppConfiguration(
+			BrowserConfiguration browserConfiguration,
+			ClipboardConfiguration clipboardConfiguration)
 		{
 			this.BrowserConfiguration = browserConfiguration;
+			this.ClipboardConfiguration = clipboardConfiguration;
 		}
 
 		[JsonProperty(Required = Required.Always)]
 		public IBrowserConfiguration BrowserConfiguration { get; set; }
+
+		[JsonProperty(Required = Required.Always)]
+		public IClipboardConfiguration ClipboardConfiguration { get; }
 	}
 }

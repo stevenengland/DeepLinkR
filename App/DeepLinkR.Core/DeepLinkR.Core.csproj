@@ -72,16 +72,22 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\BrowserConfiguration.cs" />
+    <Compile Include="Configuration\ClipboardConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
     <Compile Include="Configuration\DeepLinkConfiguration.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\IBrowserConfiguration.cs" />
+    <Compile Include="Configuration\IClipboardConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationCollection.cs" />
     <Compile Include="Configuration\IDeepLinkConfiguration.cs" />
     <Compile Include="Helper\AsyncCommand\AsyncCommand.cs" />
     <Compile Include="Helper\AsyncCommand\IAsyncCommand.cs" />
     <Compile Include="Helper\AsyncCommand\IErrorHandler.cs" />
     <Compile Include="Helper\AsyncCommand\TaskUtilities.cs" />
+    <Compile Include="Helper\LibraryMapper\SharpClipboardMapper\ISharpClipboardMapper.cs" />
+    <Compile Include="Helper\LibraryMapper\SharpClipboardMapper\SharpClipboardMapper.cs" />
+    <Compile Include="Helper\LibraryMapper\TextCopyMapper\ITextCopyMapper.cs" />
+    <Compile Include="Helper\LibraryMapper\TextCopyMapper\TextCopyMapper.cs" />
     <Compile Include="Helper\SyncCommand\ISyncCommand.cs" />
     <Compile Include="Helper\SyncCommand\SyncCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,12 +105,11 @@
     <Compile Include="Types\DeepLinkKey.cs" />
     <Compile Include="Types\DeepLinkMatch.cs" />
     <Compile Include="Types\Enums\DeepLinkSortOrder.cs" />
+    <Compile Include="Types\EventArgs\ClipboardChangedEventArgs.cs" />
     <Compile Include="Types\EventArgs\ClipboardTextUpdateEventArgs.cs" />
     <Compile Include="Types\EventArgs\DeepLinksUpdatedEventArgs.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helper\LibraryMapper\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

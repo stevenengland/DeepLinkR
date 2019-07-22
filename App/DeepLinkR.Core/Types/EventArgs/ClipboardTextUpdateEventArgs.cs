@@ -8,11 +8,11 @@ namespace DeepLinkR.Core.Types.EventArgs
 {
 	public class ClipboardTextUpdateEventArgs : System.EventArgs
 	{
-		public ClipboardTextUpdateEventArgs(string clipboardText)
+		public ClipboardTextUpdateEventArgs(string[] clipboardEntries)
 		{
-			this.ClipboardText = clipboardText;
+			this.ClipboardEntries = clipboardEntries;
 		}
 
-		public string ClipboardText { get; }
+		public string[] ClipboardEntries { get; }
 	}
 }

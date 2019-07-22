@@ -52,6 +52,9 @@
       <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpClipboard, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpClipboard.3.1.0\lib\SharpClipboard.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -90,6 +93,7 @@
     <Compile Include="Mocks\MockFactories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceTests\BrowserManagerTests.cs" />
+    <Compile Include="ServiceTests\ClipboardManagerTests.cs" />
     <Compile Include="ServiceTests\DeepLinkManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
