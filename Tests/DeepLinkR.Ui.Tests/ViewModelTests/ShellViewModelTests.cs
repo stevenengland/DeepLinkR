@@ -10,6 +10,7 @@ using DeepLinkR.Ui.Tests.Mocks;
 using MaterialDesignThemes.Wpf;
 using Moq;
 using NHotkey;
+using NHotkey.Wpf;
 using Xunit;
 
 namespace DeepLinkR.Ui.Tests.ViewModelTests
@@ -41,6 +42,40 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			// Test to make sure subscribe was called on the event aggregator at least once
 			hotkeyManager.Verify(x => x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()), Times.Once);
 		}
+
+		[Fact]
+		public void ErrorIsThrownIfHotkeyIsAlreadyRegistered()
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+			var hotkeyManagerMock = Mock.Get((INHotkeyManagerMapper)mockObjects[nameof(INHotkeyManagerMapper)]);
+			var eventAggregatorMock = Mock.Get((IEventAggregator)mockObjects[nameof(IEventAggregator)]);
+
+			hotkeyManagerMock.Setup(x =>
+				x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()));
+
+			var vm = MockFactories.ShellViewModelFactory(mockObjects);
+
+			// Test to make sure subscribe was called on the event aggregator at least once
+			hotkeyManagerMock.Raise(x => x.HotkeyAlreadyRegistered += null, this, new HotkeyAlreadyRegisteredEventArgs("test"));
+
+			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(1));
+		}
+
+		//[Fact]
+		//public void WindowIsRestoredWhenHotKeyIsPressed()
+		//{
+		//	var mockObjects = MockFactories.GetMockObjects();
+		//	var hotkeyManager = Mock.Get((INHotkeyManagerMapper)mockObjects[nameof(INHotkeyManagerMapper)]);
+		//	hotkeyManager.Setup(x =>
+		//		x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()));
+
+		//	var vm = MockFactories.ShellViewModelFactory(mockObjects);
+
+		//	hotkeyManager.Raise(x => x.);
+
+		//	// Test to make sure subscribe was called on the event aggregator at least once
+		//	hotkeyManager.Verify(x => x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()), Times.Once);
+		//}
 
 		[Fact]
 		public async Task ErrorEventsAreHandled()

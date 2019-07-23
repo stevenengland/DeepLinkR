@@ -16,6 +16,7 @@ using DeepLinkR.Ui.Models;
 using DeepLinkR.Ui.Views;
 using MaterialDesignThemes.Wpf;
 using NHotkey;
+using NHotkey.Wpf;
 
 namespace DeepLinkR.Ui.ViewModels
 {
@@ -133,6 +134,12 @@ namespace DeepLinkR.Ui.ViewModels
 		private void RegisterHotkey()
 		{
 			this.hotkeyManager.AddOrReplace("OpenDeepLinkR", Key.Space, ModifierKeys.Alt, this.OnDeepLinkROpen);
+			this.hotkeyManager.HotkeyAlreadyRegistered += OnHotkeyAlreadyRegistered;
+		}
+
+		private void OnHotkeyAlreadyRegistered(object sender, HotkeyAlreadyRegisteredEventArgs e)
+		{
+			this.eventAggregator.PublishOnUIThread(new ErrorEvent(new Exception(string.Empty), $"The hotkey {e.Name} is already registered by another application."));
 		}
 
 		private void OnDeepLinkROpen(object sender, HotkeyEventArgs e)
