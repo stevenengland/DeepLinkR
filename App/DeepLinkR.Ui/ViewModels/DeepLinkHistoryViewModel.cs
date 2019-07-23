@@ -35,7 +35,7 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void OnHistoricalEntrySelected()
 		{
-			// this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches));
+			// this.eventAggregator.PublishOnUIThread(new HistoricalDeepLinkSelectedEvent(deepLinkMatches));
 		}
 	}
 }

@@ -137,7 +137,10 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void OnDeepLinkROpen(object sender, HotkeyEventArgs e)
 		{
-			// OpenMainWindow
+			if (this.CurWindowState == WindowState.Minimized)
+			{
+				this.CurWindowState = WindowState.Normal;
+			}
 		}
 
 		private void OnMenuItemsSelectionChanged()
