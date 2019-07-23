@@ -1,4 +1,5 @@
 ﻿using System;
+using DeepLinkR.Ui.Events;
 using NHotkey.Wpf;
 
 namespace DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper
@@ -7,6 +8,8 @@ namespace DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper
 	{
 		event EventHandler<HotkeyAlreadyRegisteredEventArgs> HotkeyAlreadyRegistered;
 
-		void AddOrReplace(string name, System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifierKeys, EventHandler<NHotkey.HotkeyEventArgs> e);
+		event EventHandler<HotKeyEventArgs> HotKeyPressed;
+
+		void AddOrReplace(string name, System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifierKeys);
 	}
 }

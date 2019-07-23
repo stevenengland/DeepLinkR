@@ -99,6 +99,7 @@
     <Compile Include="Events\DeepLinkMatchesUpdatedEvent.cs" />
     <Compile Include="Events\ErrorEvent.cs" />
     <Compile Include="Events\HistoricalDeepLinkSelectedEvent.cs" />
+    <Compile Include="Events\HotKeyEventArgs.cs" />
     <Compile Include="Helper\Extensions\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Helper\LibraryMapper\DialogHostMapper\DialogHostMapper.cs" />
     <Compile Include="Helper\LibraryMapper\DialogHostMapper\IDialogHostMapper.cs" />

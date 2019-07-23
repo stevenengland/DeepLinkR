@@ -133,8 +133,9 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void RegisterHotkey()
 		{
-			this.hotkeyManager.AddOrReplace("OpenDeepLinkR", Key.Space, ModifierKeys.Alt, this.OnDeepLinkROpen);
-			this.hotkeyManager.HotkeyAlreadyRegistered += OnHotkeyAlreadyRegistered;
+			this.hotkeyManager.AddOrReplace("OpenDeepLinkR", Key.Space, ModifierKeys.Alt);
+			this.hotkeyManager.HotKeyPressed += this.OnDeepLinkROpen;
+			this.hotkeyManager.HotkeyAlreadyRegistered += this.OnHotkeyAlreadyRegistered;
 		}
 
 		private void OnHotkeyAlreadyRegistered(object sender, HotkeyAlreadyRegisteredEventArgs e)
@@ -142,12 +143,14 @@ namespace DeepLinkR.Ui.ViewModels
 			this.eventAggregator.PublishOnUIThread(new ErrorEvent(new Exception(string.Empty), $"The hotkey {e.Name} is already registered by another application."));
 		}
 
-		private void OnDeepLinkROpen(object sender, HotkeyEventArgs e)
+		private void OnDeepLinkROpen(object sender, HotKeyEventArgs e)
 		{
 			if (this.CurWindowState == WindowState.Minimized)
 			{
 				this.CurWindowState = WindowState.Normal;
 			}
+
+			e.Handled = true;
 		}
 
 		private void OnMenuItemsSelectionChanged()

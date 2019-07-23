@@ -35,12 +35,12 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			var mockObjects = MockFactories.GetMockObjects();
 			var hotkeyManager = Mock.Get((INHotkeyManagerMapper)mockObjects[nameof(INHotkeyManagerMapper)]);
 			hotkeyManager.Setup(x =>
-				x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()));
+				x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>()));
 
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 
 			// Test to make sure subscribe was called on the event aggregator at least once
-			hotkeyManager.Verify(x => x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()), Times.Once);
+			hotkeyManager.Verify(x => x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>()), Times.Once);
 		}
 
 		[Fact]
@@ -51,7 +51,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			var eventAggregatorMock = Mock.Get((IEventAggregator)mockObjects[nameof(IEventAggregator)]);
 
 			hotkeyManagerMock.Setup(x =>
-				x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()));
+				x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>()));
 
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 
@@ -61,21 +61,21 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(1));
 		}
 
-		//[Fact]
-		//public void WindowIsRestoredWhenHotKeyIsPressed()
-		//{
-		//	var mockObjects = MockFactories.GetMockObjects();
-		//	var hotkeyManager = Mock.Get((INHotkeyManagerMapper)mockObjects[nameof(INHotkeyManagerMapper)]);
-		//	hotkeyManager.Setup(x =>
-		//		x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()));
+		[Fact]
+		public void WindowIsRestoredWhenHotKeyIsPressed()
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+			var hotkeyManager = Mock.Get((INHotkeyManagerMapper)mockObjects[nameof(INHotkeyManagerMapper)]);
+			hotkeyManager.Setup(x =>
+				x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>()));
 
-		//	var vm = MockFactories.ShellViewModelFactory(mockObjects);
+			var vm = MockFactories.ShellViewModelFactory(mockObjects);
+			vm.CurWindowState = WindowState.Minimized;
 
-		//	hotkeyManager.Raise(x => x.);
+			hotkeyManager.Raise(x => x.HotKeyPressed += null, this, new HotKeyEventArgs("test"));
 
-		//	// Test to make sure subscribe was called on the event aggregator at least once
-		//	hotkeyManager.Verify(x => x.AddOrReplace(It.IsAny<string>(), It.IsAny<Key>(), It.IsAny<ModifierKeys>(), It.IsAny<EventHandler<HotkeyEventArgs>>()), Times.Once);
-		//}
+			Assert.Equal(WindowState.Normal, vm.CurWindowState);
+		}
 
 		[Fact]
 		public async Task ErrorEventsAreHandled()
