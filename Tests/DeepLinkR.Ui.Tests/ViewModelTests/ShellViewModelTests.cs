@@ -56,7 +56,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 
 			// Test to make sure subscribe was called on the event aggregator at least once
-			hotkeyManagerMock.Raise(x => x.HotkeyAlreadyRegistered += null, this, new HotkeyAlreadyRegisteredEventArgs("test"));
+			hotkeyManagerMock.Raise(x => x.HotkeyAlreadyRegistered += null, this, new MappedHotkeyAlreadyRegisteredEventArgs("test"));
 
 			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(1));
 		}
@@ -72,21 +72,24 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 			vm.CurWindowState = WindowState.Minimized;
 
-			hotkeyManager.Raise(x => x.HotKeyPressed += null, this, new HotKeyEventArgs("test"));
+			hotkeyManager.Raise(x => x.HotKeyPressed += null, this, new MappedHotKeyEventArgs("test"));
 
 			Assert.Equal(WindowState.Normal, vm.CurWindowState);
 		}
 
 		[Fact]
-		public async Task ErrorEventsAreHandled()
+		public void ErrorEventsAreHandled()
 		{
 			var mockObjects = MockFactories.GetMockObjects();
-			var dialogHostMapper = Mock.Get((IDialogHostMapper)mockObjects[nameof(IDialogHostMapper)]);
+
+			// var dialogHostMapper = Mock.Get((IDialogHostMapper)mockObjects[nameof(IDialogHostMapper)]);
+			var snackbarMock = Mock.Get((ISnackbarMessageQueue)mockObjects[nameof(ISnackbarMessageQueue)]);
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 
-			await vm.Handle(new ErrorEvent(new Exception(), "test"));
+			vm.Handle(new ErrorEvent(new Exception(), "test"));
 
-			dialogHostMapper.Verify(x => x.Show(It.IsAny<object>(), It.IsAny<object>()), Times.Once);
+			// dialogHostMapper.Verify(x => x.Show(It.IsAny<object>(), It.IsAny<object>()), Times.Once);
+			snackbarMock.Verify(x => x.Enqueue(It.IsAny<object>(), It.IsAny<object>(), It.IsAny<Action<ErrorEvent>>(), It.IsAny<ErrorEvent>()), Times.Once);
 		}
 
 		[Fact]

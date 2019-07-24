@@ -20,7 +20,7 @@ using NHotkey.Wpf;
 
 namespace DeepLinkR.Ui.ViewModels
 {
-	public class ShellViewModel : Screen, IHandleWithTask<ErrorEvent>
+	public class ShellViewModel : Screen, IHandle<ErrorEvent>
 	{
 		private IClipboardManager clipboardManager;
 		private INHotkeyManagerMapper hotkeyManager;
@@ -31,6 +31,7 @@ namespace DeepLinkR.Ui.ViewModels
 		private WindowState curWindowState;
 		private MainViewModel mainViewModel;
 		private AboutViewModel aboutViewModel;
+		private ErrorEvent lastErrorEvent;
 
 		public ShellViewModel(
 			IClipboardManager clipboardManager,
@@ -51,7 +52,7 @@ namespace DeepLinkR.Ui.ViewModels
 
 			this.eventAggregator.Subscribe(this);
 
-			// LoadConfiguration
+			// Register hotkey
 			this.RegisterHotkey();
 
 			// Load Menu items
@@ -92,22 +93,31 @@ namespace DeepLinkR.Ui.ViewModels
 			}
 		}
 
-		public async Task Handle(ErrorEvent message)
+		public void Handle(ErrorEvent message)
 		{
-			// var view = new ErrorView()
-			// {
-			// DataContext = new ErrorViewModel(message.ErrorMessage),
-			// };
-			// var result = await this.dialogHostMapper.Show(view, "RootDialog");
-
 			// ToDo: Log the Exception
-			var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(message.ErrorMessage), "RootDialog");
+			this.lastErrorEvent = message;
+			this.SbMessageQueue.Enqueue<ErrorEvent>("An error occured!", "Details", async (arg) => await this.ShowError(arg), message);
 		}
 
 		protected override void OnViewLoaded(object view)
 		{
 			base.OnViewLoaded(view);
-			this.SbMessageQueue.Enqueue("Application successfully loaded");
+
+			// All stuff that uses error handling should come here to make use of the DialogHost, that is only available after the view loaded.
+			if (this.lastErrorEvent != null)
+			{
+				this.SbMessageQueue.Enqueue("Application loaded with errors.");
+			}
+			else
+			{
+				this.SbMessageQueue.Enqueue("Application successfully loaded");
+			}
+		}
+
+		private async Task ShowError(ErrorEvent errorEvent)
+		{
+			var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(errorEvent.ErrorMessage), "RootDialog");
 		}
 
 		private void LoadMenuItems()
@@ -133,17 +143,17 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void RegisterHotkey()
 		{
+			this.hotkeyManager.HotkeyAlreadyRegistered += this.OnHotkeyAlreadyRegistered;
 			this.hotkeyManager.AddOrReplace("OpenDeepLinkR", Key.Space, ModifierKeys.Alt);
 			this.hotkeyManager.HotKeyPressed += this.OnDeepLinkROpen;
-			this.hotkeyManager.HotkeyAlreadyRegistered += this.OnHotkeyAlreadyRegistered;
 		}
 
-		private void OnHotkeyAlreadyRegistered(object sender, HotkeyAlreadyRegisteredEventArgs e)
+		private void OnHotkeyAlreadyRegistered(object sender, MappedHotkeyAlreadyRegisteredEventArgs e)
 		{
-			this.eventAggregator.PublishOnUIThread(new ErrorEvent(new Exception(string.Empty), $"The hotkey {e.Name} is already registered by another application."));
+			this.eventAggregator.PublishOnUIThread(new ErrorEvent(null, $"The hotkey is already registered by another application ({e.Name})."));
 		}
 
-		private void OnDeepLinkROpen(object sender, HotKeyEventArgs e)
+		private void OnDeepLinkROpen(object sender, MappedHotKeyEventArgs e)
 		{
 			if (this.CurWindowState == WindowState.Minimized)
 			{

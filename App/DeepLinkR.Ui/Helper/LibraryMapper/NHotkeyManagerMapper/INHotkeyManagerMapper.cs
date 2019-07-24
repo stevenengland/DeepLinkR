@@ -6,9 +6,9 @@ namespace DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper
 {
 	public interface INHotkeyManagerMapper
 	{
-		event EventHandler<HotkeyAlreadyRegisteredEventArgs> HotkeyAlreadyRegistered;
+		event EventHandler<MappedHotkeyAlreadyRegisteredEventArgs> HotkeyAlreadyRegistered;
 
-		event EventHandler<HotKeyEventArgs> HotKeyPressed;
+		event EventHandler<MappedHotKeyEventArgs> HotKeyPressed;
 
 		void AddOrReplace(string name, System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifierKeys);
 	}

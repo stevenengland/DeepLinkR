@@ -16,6 +16,7 @@ using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
 using DeepLinkR.Core.Services.ProcessProxy;
 using DeepLinkR.Core.Types;
+using DeepLinkR.Ui.Events;
 using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.Models;
@@ -61,7 +62,7 @@ namespace DeepLinkR.Ui
 
 			var autoMapper = mapperConfiguration.CreateMapper();
 
-			this.SbMessageQueue = new SnackbarMessageQueue();
+			this.SbMessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(5));
 
 			this.simpleContainer.Instance(autoMapper);
 
@@ -122,11 +123,13 @@ namespace DeepLinkR.Ui
 		protected override void OnUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
 			// Todo: Write you custom code for handling Global unhandled excpetion of Dispatcher or UI thread.
-			base.OnUnhandledException(sender, e);
+			// base.OnUnhandledException(sender, e);
 
 			// DialogHost.Show()
 			// MessageBox.Show(e.Exception.Message, "An error as occurred", MessageBoxButton.OK);
-			// e.Handled = true;
+			var eventAggregator = (IEventAggregator)this.simpleContainer.GetInstance(typeof(IEventAggregator), null);
+			eventAggregator.PublishOnUIThread(new ErrorEvent(e.Exception, "An unhandled exception occured: " + e.Exception.Message));
+			e.Handled = true;
 		}
 
 		private ConfigurationCollection ReadConfiguration()

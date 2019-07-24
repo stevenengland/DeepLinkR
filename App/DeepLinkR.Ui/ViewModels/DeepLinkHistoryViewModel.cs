@@ -30,7 +30,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void OnTest()
 		{
-			this.eventAggregator.PublishOnUIThread(new ErrorEvent(new Exception(string.Empty), "This is an error"));
+			throw new InvalidCastException("this one is faulty. Lorem ipsum dolor sunt. Lorem ipsum dolor sunt. Lorem ipsum dolor sunt.");
+			//this.eventAggregator.PublishOnUIThread(new ErrorEvent(new Exception(string.Empty), "This is an error"));
 		}
 
 		private void OnHistoricalEntrySelected()

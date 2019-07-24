@@ -9,21 +9,33 @@ namespace DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper
 	{
 		public NHotkeyManagerMapper()
 		{
-			HotkeyManager.HotkeyAlreadyRegistered += this.HotkeyAlreadyRegistered;
+			HotkeyManager.HotkeyAlreadyRegistered += this.OnHotkeyAlreadyRegistered;
 		}
 
-		public event EventHandler<HotkeyAlreadyRegisteredEventArgs> HotkeyAlreadyRegistered;
+		public event EventHandler<MappedHotkeyAlreadyRegisteredEventArgs> HotkeyAlreadyRegistered;
 
-		public event EventHandler<HotKeyEventArgs> HotKeyPressed;
+		public event EventHandler<MappedHotKeyEventArgs> HotKeyPressed;
 
 		public void AddOrReplace(string name, System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifierKeys)
 		{
-			HotkeyManager.Current.AddOrReplace(name, key, modifierKeys, this.OnHotKeyPressed);
+			try
+			{
+				HotkeyManager.Current.AddOrReplace(name, key, modifierKeys, this.OnHotKeyPressed);
+			}
+			catch (HotkeyAlreadyRegisteredException e)
+			{
+				this.HotkeyAlreadyRegistered?.Invoke(this, new MappedHotkeyAlreadyRegisteredEventArgs(e.Name));
+			}
 		}
 
 		private void OnHotKeyPressed(object sender, HotkeyEventArgs e)
 		{
-			this.HotKeyPressed?.Invoke(this, new HotKeyEventArgs(e));
+			this.HotKeyPressed?.Invoke(this, new MappedHotKeyEventArgs(e));
+		}
+
+		private void OnHotkeyAlreadyRegistered(object sender, HotkeyAlreadyRegisteredEventArgs e)
+		{
+			this.HotkeyAlreadyRegistered?.Invoke(this, new MappedHotkeyAlreadyRegisteredEventArgs(e.Name));
 		}
 	}
 }

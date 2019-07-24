@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DeepLinkR.Ui.Events
 {
-	public class HotKeyEventArgs : EventArgs
+	public class MappedHotKeyEventArgs : EventArgs
 	{
-		public HotKeyEventArgs(string name)
+		public MappedHotKeyEventArgs(string name)
 		{
 			this.Name = name;
 		}
 
-		public HotKeyEventArgs(NHotkey.HotkeyEventArgs eventArgs)
+		public MappedHotKeyEventArgs(NHotkey.HotkeyEventArgs eventArgs)
 		{
 			this.Name = eventArgs.Name;
 			this.Handled = eventArgs.Handled;
