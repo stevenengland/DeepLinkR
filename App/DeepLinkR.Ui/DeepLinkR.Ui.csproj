@@ -13,7 +13,7 @@
     <ProjectGuid>{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>DeepLinkR.Ui</RootNamespace>
-    <AssemblyName>DeepLinkR.Ui</AssemblyName>
+    <AssemblyName>DeepLinkR</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -39,6 +39,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
@@ -163,7 +166,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
@@ -200,6 +202,9 @@
       <Project>{78DF02BD-992D-4C68-B30C-07AEA37CF48D}</Project>
       <Name>DeepLinkR.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
