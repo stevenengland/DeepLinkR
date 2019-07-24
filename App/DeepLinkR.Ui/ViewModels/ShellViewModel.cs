@@ -122,10 +122,6 @@ namespace DeepLinkR.Ui.ViewModels
 					this.GracefulShutdown();
 				}
 			}
-			else
-			{
-				this.SbMessageQueue.Enqueue("Application successfully loaded");
-			}
 		}
 
 		private async Task ShowError(ErrorEvent errorEvent)

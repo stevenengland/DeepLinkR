@@ -9,6 +9,7 @@ using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using MaterialDesignThemes.Wpf;
+using Moq;
 using Xunit;
 
 namespace DeepLinkR.Ui.Tests

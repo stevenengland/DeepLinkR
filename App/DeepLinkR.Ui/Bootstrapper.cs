@@ -29,6 +29,7 @@ namespace DeepLinkR.Ui
 	public class Bootstrapper : BootstrapperBase
 	{
 		private readonly SimpleContainer simpleContainer = new SimpleContainer();
+		private ErrorEvent firstErrorEvent;
 
 		public Bootstrapper()
 		{
@@ -43,41 +44,117 @@ namespace DeepLinkR.Ui
 
 		private ISnackbarMessageQueue SbMessageQueue { get; set; }
 
+		private IMapper Mapper { get; set; }
+
+		private IBrowserManager BrowserManager { get; set; }
+
 		protected override void Configure()
 		{
-			// base.Configure();
-			this.ConfigurationCollection = this.ReadConfiguration();
-
-			this.DeepLinkManager = new DeepLinkManager(this.ConfigurationCollection.DeepLinkConfiguration);
-
-			this.ClipboardManager = new ClipboardManager(
-				this.ConfigurationCollection.AppConfiguration.ClipboardConfiguration,
-				new SharpClipboardMapper(),
-				new TextCopyMapper());
-
-			var mapperConfiguration = new MapperConfiguration(cfg =>
+			try
 			{
-				cfg.CreateMap<DeepLinkMatch, DeepLinkMatchDisplayModel>();
-			});
+				this.ConfigurationCollection = this.ReadConfiguration();
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, "Configuration could not be loaded: " + e.Message, true));
 
-			var autoMapper = mapperConfiguration.CreateMapper();
+				// ToDo: Minimal viable fake configuration to load the app
+				this.ConfigurationCollection = new ConfigurationCollection(
+					new DeepLinkConfiguration(),
+					new AppConfiguration(
+						new BrowserConfiguration(),
+						new ClipboardConfiguration()));
+			}
 
-			this.SbMessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(5));
+			try
+			{
+				this.ConfigurationCollection.Validate();
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, "Configuration violates one or more rules: " + e.Message, true));
+			}
 
-			this.simpleContainer.Instance(autoMapper);
+			try
+			{
+				this.ConfigurationCollection.Validate();
+				this.simpleContainer.Instance<IConfigurationCollection>(this.ConfigurationCollection);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, "Configuration violates one or more rules: " + e.Message, true));
+			}
 
+			try
+			{
+				this.DeepLinkManager = new DeepLinkManager(this.ConfigurationCollection.DeepLinkConfiguration);
+				this.simpleContainer.Instance<IDeepLinkManager>(this.DeepLinkManager);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, $"Could not load {nameof(this.DeepLinkManager)}:" + e.Message, true));
+			}
+
+			try
+			{
+				this.ClipboardManager = new ClipboardManager(
+					this.ConfigurationCollection.AppConfiguration.ClipboardConfiguration,
+					new SharpClipboardMapper(),
+					new TextCopyMapper());
+				this.simpleContainer.Instance<IClipboardManager>(this.ClipboardManager);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, $"Could not load {nameof(this.ClipboardManager)}:" + e.Message, true));
+			}
+
+			try
+			{
+				var mapperConfiguration = new MapperConfiguration(cfg =>
+				{
+					cfg.CreateMap<DeepLinkMatch, DeepLinkMatchDisplayModel>();
+				});
+
+				this.Mapper = mapperConfiguration.CreateMapper();
+
+				this.simpleContainer.Instance(this.Mapper);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, $"Could not load {nameof(this.Mapper)}:" + e.Message, true));
+			}
+
+			try
+			{
+				this.BrowserManager =
+					new BrowserManager(
+						this.ConfigurationCollection.AppConfiguration.BrowserConfiguration,
+						new ProcessProxy());
+				this.simpleContainer.Instance<IBrowserManager>(this.BrowserManager);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, $"Could not load {nameof(this.BrowserManager)}:" + e.Message, true));
+			}
+
+			try
+			{
+				this.SbMessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(5));
+				this.simpleContainer.Instance<ISnackbarMessageQueue>(this.SbMessageQueue);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, $"Could not load {nameof(this.SbMessageQueue)}:" + e.Message, true));
+			}
+
+			// Register itself
 			this.simpleContainer.Instance(this.simpleContainer);
 
-				// .PerRequest
+			// .PerRequest
 			this.simpleContainer
 				.Singleton<IWindowManager, WindowManager>()
 				.Singleton<IEventAggregator, EventAggregator>()
 				.Singleton<INHotkeyManagerMapper, NHotkeyManagerMapper>()
-				.Instance<IConfigurationCollection>(this.ConfigurationCollection)
-				.Instance<IClipboardManager>(this.ClipboardManager)
-				.Instance<IDeepLinkManager>(this.DeepLinkManager)
-				.Instance<ISnackbarMessageQueue>(this.SbMessageQueue)
-				.Instance<IBrowserManager>(new BrowserManager(this.ConfigurationCollection.AppConfiguration.BrowserConfiguration, new ProcessProxy()))
 				.PerRequest<IDialogHostMapper, DialogHostMapper>();
 
 			// Registers every ViewModel to the container
@@ -103,6 +180,15 @@ namespace DeepLinkR.Ui
 		{
 			// base.OnStartup(sender, e);
 			this.DisplayRootViewFor<ShellViewModel>();
+			if (this.firstErrorEvent != null)
+			{
+				var eventAggregator = (IEventAggregator)this.simpleContainer.GetInstance(typeof(IEventAggregator), null);
+				eventAggregator.PublishOnUIThread(
+					new ErrorEvent(
+						this.firstErrorEvent.Exception,
+						"An unhandled exception occured: " + this.firstErrorEvent.ErrorMessage,
+						this.firstErrorEvent.ApplicationMustShutdown));
+			}
 		}
 
 		protected override object GetInstance(Type service, string key)
@@ -125,8 +211,6 @@ namespace DeepLinkR.Ui
 			// Todo: Write you custom code for handling Global unhandled excpetion of Dispatcher or UI thread.
 			// base.OnUnhandledException(sender, e);
 
-			// DialogHost.Show()
-			// MessageBox.Show(e.Exception.Message, "An error as occurred", MessageBoxButton.OK);
 			var eventAggregator = (IEventAggregator)this.simpleContainer.GetInstance(typeof(IEventAggregator), null);
 			eventAggregator.PublishOnUIThread(new ErrorEvent(e.Exception, "An unhandled exception occured: " + e.Exception.Message, true));
 			e.Handled = true;
@@ -138,6 +222,15 @@ namespace DeepLinkR.Ui
 			{
 				var jsonString = streamReader.ReadToEnd();
 				return JsonConvert.DeserializeObject<ConfigurationCollection>(jsonString);
+			}
+		}
+
+		private void SetErrorEvent(ErrorEvent errorEvent)
+		{
+			// only the youngest should be kept
+			if (this.firstErrorEvent == null)
+			{
+				this.firstErrorEvent = errorEvent;
 			}
 		}
 	}

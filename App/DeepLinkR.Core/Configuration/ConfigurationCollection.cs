@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeepLinkR.Core.Types;
 using Newtonsoft.Json;
 
 namespace DeepLinkR.Core.Configuration
@@ -23,5 +24,15 @@ namespace DeepLinkR.Core.Configuration
 
 		[JsonProperty(Required = Required.Always)]
 		public IDeepLinkConfiguration DeepLinkConfiguration { get; set; }
+
+		public void Validate()
+		{
+			// At least one Browser is configured
+			if (this.AppConfiguration?.BrowserConfiguration?.BrowserDefinitions == null ||
+			    this.AppConfiguration?.BrowserConfiguration?.BrowserDefinitions.Count == 0)
+			{
+				throw new Exception($"You need at least one item in {nameof(this.AppConfiguration.BrowserConfiguration.BrowserDefinitions)}");
+			}
+		}
 	}
 }

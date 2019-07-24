@@ -11,5 +11,7 @@ namespace DeepLinkR.Core.Configuration
 		IAppConfiguration AppConfiguration { get; set; }
 
 		IDeepLinkConfiguration DeepLinkConfiguration { get; set; }
+
+		void Validate();
 	}
 }
