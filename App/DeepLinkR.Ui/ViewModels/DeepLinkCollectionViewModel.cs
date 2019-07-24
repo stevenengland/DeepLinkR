@@ -18,6 +18,7 @@ using DeepLinkR.Core.Types.Enums;
 using DeepLinkR.Core.Types.EventArgs;
 using DeepLinkR.Ui.Events;
 using DeepLinkR.Ui.Models;
+using MaterialDesignThemes.Wpf;
 
 namespace DeepLinkR.Ui.ViewModels
 {
@@ -54,7 +55,8 @@ namespace DeepLinkR.Ui.ViewModels
 			this.clipboardManager.ClipboardTextUpdateReceived += this.OnClipboardTextUpdateReceived;
 			this.eventAggregator.Subscribe(this);
 
-			this.currentMatchName = "-";
+			// this.currentMatchName = "-";
+			this.HierarchicalLinks = new BindingList<HierarchyLevelOne>();
 		}
 
 		public ICommand ChangeSortOrderDirectionCommand => new SyncCommand(() => this.OnChangeSortOrderDirection());
@@ -64,6 +66,8 @@ namespace DeepLinkR.Ui.ViewModels
 		public ICommand CopyLinkToClipboardCommand => new SyncCommand<string>((arg) => this.OnCopyLinkToClipboard(arg));
 
 		public ICommand OpenWithDefaultBrowserCommand => new SyncCommand<string>((arg) => this.OnOpenWithDefaultBrowser(arg));
+
+		public ICommand ApplyInputCommand => new SyncCommand<string>((arg) => this.OnApplyInput(arg));
 
 		public BindingList<DeepLinkMatchDisplayModel> DeepLinkMatchesDisplayModels
 		{
@@ -189,21 +193,36 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void OnClipboardTextUpdateReceived(object sender, ClipboardTextUpdateEventArgs e)
 		{
-			var clipboardEntries = e.ClipboardEntries;
-			for (int i = clipboardEntries.Length - 1; i >= 0; i--)
+			this.ProcessTextUpdates(e.ClipboardEntries);
+		}
+
+		private bool ProcessTextUpdates(string[] updateEntries)
+		{
+			if (updateEntries == null || updateEntries.Length == 0)
 			{
-				var deepLinkMatches = this.deepLinkManager.GetDeepLinkMatches(clipboardEntries[i]);
-				if (deepLinkMatches?.Count > 0)
+				return false;
+			}
+
+			var matchesDetected = false;
+
+			for (int i = updateEntries.Length - 1; i >= 0; i--)
+			{
+				var matches = this.deepLinkManager.GetDeepLinkMatches(updateEntries[i]);
+				if (matches?.Count > 0)
 				{
+					matchesDetected = true;
+
 					if (i == 0)
 					{
-						this.CurrentMatchName = clipboardEntries[i];
-						this.Sideload(deepLinkMatches);
+						this.CurrentMatchName = updateEntries[i];
+						this.Sideload(matches);
 					}
 
-					this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(deepLinkMatches, clipboardEntries[i]));
+					this.eventAggregator.PublishOnUIThread(new DeepLinkMatchesUpdatedEvent(matches, updateEntries[i]));
 				}
 			}
+
+			return matchesDetected;
 		}
 
 		private void OnChangeSortOrderDirection()
@@ -236,6 +255,20 @@ namespace DeepLinkR.Ui.ViewModels
 		{
 			// ToDo: TryCatch
 			this.browserManager.OpenWithDefaultBrowser(url);
+		}
+
+		private void OnApplyInput(string input)
+		{
+			if (string.IsNullOrEmpty(input))
+			{
+				return;
+			}
+
+			if (!this.ProcessTextUpdates(new[] { input }))
+			{
+				// this.CurrentMatchName = string.Empty;
+				this.HierarchicalLinks?.Clear();
+			}
 		}
 	}
 }

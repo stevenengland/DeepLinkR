@@ -89,6 +89,38 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 		}
 
 		[Fact]
+		public void TextboxUpdatesThatDoNotMatchAreProcessed()
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+
+			var deeplinkManagerMock = Mock.Get((IDeepLinkManager)mockObjects[nameof(IDeepLinkManager)]);
+
+			deeplinkManagerMock.Setup(x => x.GetDeepLinkMatches(It.IsAny<string>())).Returns((List<DeepLinkMatch>)null);
+
+			var vm = MockFactories.DeepLinkCollectionViewModelFactory(mockObjects);
+
+			vm.ApplyInputCommand.Execute("test");
+
+			Assert.Empty(vm.HierarchicalLinks);
+		}
+
+		[Fact]
+		public void TextboxUpdatesThatDoMatchAreProcessed()
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+
+			var deeplinkManagerMock = Mock.Get((IDeepLinkManager)mockObjects[nameof(IDeepLinkManager)]);
+
+			deeplinkManagerMock.Setup(x => x.GetDeepLinkMatches(It.IsAny<string>())).Returns(new List<DeepLinkMatch>() { MockedDeeplinkMatches.SimpleDeepLinkMatch });
+
+			var vm = MockFactories.DeepLinkCollectionViewModelFactory(mockObjects);
+
+			vm.ApplyInputCommand.Execute("test");
+
+			Assert.NotEmpty(vm.HierarchicalLinks);
+		}
+
+		[Fact]
 		public void SortedListOfMatchesByCategoryIsCreated()
 		{
 			var mockObjects = MockFactories.GetMockObjects();
