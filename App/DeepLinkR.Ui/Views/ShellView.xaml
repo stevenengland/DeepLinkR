@@ -18,7 +18,8 @@
         
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        WindowState="{Binding CurWindowState, Mode=TwoWay}">
+        WindowState="{Binding CurWindowState, Mode=TwoWay}"
+        MinWidth="900">
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>

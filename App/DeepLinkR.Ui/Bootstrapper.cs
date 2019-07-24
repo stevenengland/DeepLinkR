@@ -128,7 +128,7 @@ namespace DeepLinkR.Ui
 			// DialogHost.Show()
 			// MessageBox.Show(e.Exception.Message, "An error as occurred", MessageBoxButton.OK);
 			var eventAggregator = (IEventAggregator)this.simpleContainer.GetInstance(typeof(IEventAggregator), null);
-			eventAggregator.PublishOnUIThread(new ErrorEvent(e.Exception, "An unhandled exception occured: " + e.Exception.Message));
+			eventAggregator.PublishOnUIThread(new ErrorEvent(e.Exception, "An unhandled exception occured: " + e.Exception.Message, true));
 			e.Handled = true;
 		}
 

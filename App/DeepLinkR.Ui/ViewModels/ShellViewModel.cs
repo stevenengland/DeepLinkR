@@ -20,7 +20,7 @@ using NHotkey.Wpf;
 
 namespace DeepLinkR.Ui.ViewModels
 {
-	public class ShellViewModel : Screen, IHandle<ErrorEvent>
+	public class ShellViewModel : Screen, IHandleWithTask<ErrorEvent>
 	{
 		private IClipboardManager clipboardManager;
 		private INHotkeyManagerMapper hotkeyManager;
@@ -93,14 +93,22 @@ namespace DeepLinkR.Ui.ViewModels
 			}
 		}
 
-		public void Handle(ErrorEvent message)
+		public async Task Handle(ErrorEvent message)
 		{
 			// ToDo: Log the Exception
 			this.lastErrorEvent = message;
-			this.SbMessageQueue.Enqueue<ErrorEvent>("An error occured!", "Details", async (arg) => await this.ShowError(arg), message);
+			if (message.ApplicationMustShutdown)
+			{
+				var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(message.ErrorMessage + "\n\n\nApplication needs to shutdown itself"), "RootDialog");
+				this.GracefulShutdown();
+			}
+			else
+			{
+				this.SbMessageQueue.Enqueue<ErrorEvent>("An error occured!", "Details", async (arg) => await this.ShowError(arg), message);
+			}
 		}
 
-		protected override void OnViewLoaded(object view)
+		protected override async void OnViewLoaded(object view)
 		{
 			base.OnViewLoaded(view);
 
@@ -108,6 +116,11 @@ namespace DeepLinkR.Ui.ViewModels
 			if (this.lastErrorEvent != null)
 			{
 				this.SbMessageQueue.Enqueue("Application loaded with errors.");
+				if (this.lastErrorEvent.ApplicationMustShutdown)
+				{
+					var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(this.lastErrorEvent.ErrorMessage + "\n\n\nApplication needs to shutdown itself"), "RootDialog");
+					this.GracefulShutdown();
+				}
 			}
 			else
 			{
@@ -184,6 +197,11 @@ namespace DeepLinkR.Ui.ViewModels
 		}
 
 		private void OnExitApp()
+		{
+			this.GracefulShutdown();
+		}
+
+		private void GracefulShutdown()
 		{
 			System.Windows.Application.Current.Shutdown();
 		}
