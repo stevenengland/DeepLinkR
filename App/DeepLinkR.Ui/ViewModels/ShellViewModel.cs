@@ -171,9 +171,19 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void OnDeepLinkROpen(object sender, MappedHotKeyEventArgs e)
 		{
-			if (this.CurWindowState == WindowState.Minimized)
+			if (this.CurWindowState != WindowState.Maximized)
 			{
 				this.CurWindowState = WindowState.Normal;
+			}
+
+			if (Application.Current?.MainWindow != null)
+			{
+				Application.Current.MainWindow.ShowInTaskbar = true;
+				Application.Current.MainWindow.Visibility = Visibility.Visible;
+				Application.Current.MainWindow.Activate();
+				Application.Current.MainWindow.Topmost = true;
+				Application.Current.MainWindow.Topmost = false;
+				Application.Current.MainWindow.Focus();
 			}
 
 			e.Handled = true;
