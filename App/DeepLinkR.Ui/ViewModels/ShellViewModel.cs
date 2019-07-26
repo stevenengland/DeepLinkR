@@ -101,7 +101,7 @@ namespace DeepLinkR.Ui.ViewModels
 		{
 			// ToDo: Log the Exception
 			this.lastErrorEvent = errorEvent;
-			this.loggerManager.Error(errorEvent.Exception);
+		this.loggerManager.Error(errorEvent.Exception);
 			if (errorEvent.ApplicationMustShutdown)
 			{
 				var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(errorEvent.ErrorMessage + "\n\n\nApplication needs to shutdown itself"), "RootDialog");

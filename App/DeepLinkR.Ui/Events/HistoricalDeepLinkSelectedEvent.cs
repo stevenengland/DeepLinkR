@@ -9,11 +9,14 @@ namespace DeepLinkR.Ui.Events
 {
 	public class HistoricalDeepLinkSelectedEvent
 	{
-		public HistoricalDeepLinkSelectedEvent(List<DeepLinkMatch> deepLinkMatches)
+		public HistoricalDeepLinkSelectedEvent(List<DeepLinkMatch> deepLinkMatches, string deepLinkMatchValue)
 		{
 			this.DeepLinkMatches = deepLinkMatches;
+			this.DeepLinkMatchValue = deepLinkMatchValue;
 		}
 
 		public List<DeepLinkMatch> DeepLinkMatches { get; private set; }
+
+		public string DeepLinkMatchValue { get; private set; }
 	}
 }

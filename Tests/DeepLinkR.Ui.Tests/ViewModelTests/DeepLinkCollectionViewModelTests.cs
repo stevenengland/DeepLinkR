@@ -40,10 +40,12 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 
 			var vm = MockFactories.DeepLinkCollectionViewModelFactory(mockObjects);
 
-			vm.Handle(new HistoricalDeepLinkSelectedEvent(new List<DeepLinkMatch>()
-			{
-				MockedDeeplinkMatches.SimpleDeepLinkMatch,
-			}));
+			vm.Handle(new HistoricalDeepLinkSelectedEvent(
+				new List<DeepLinkMatch>()
+				{
+					MockedDeeplinkMatches.SimpleDeepLinkMatch,
+				},
+				"test"));
 		}
 
 		[Fact]

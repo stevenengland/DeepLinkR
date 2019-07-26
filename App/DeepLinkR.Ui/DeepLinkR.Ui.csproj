@@ -119,6 +119,7 @@
     <Compile Include="Helper\LibraryMapper\NHotkeyManagerMapper\NHotkeyManagerMapper.cs" />
     <Compile Include="Models\DeepLinkMatchDisplayModel.cs" />
     <Compile Include="Models\HierarchyLevelOne.cs" />
+    <Compile Include="Models\HistoryEntry.cs" />
     <Compile Include="Models\NavigationMenuItem.cs" />
     <Compile Include="Models\HierarchyLevelTwo.cs" />
     <Compile Include="Models\HierarchyLevelThree.cs" />

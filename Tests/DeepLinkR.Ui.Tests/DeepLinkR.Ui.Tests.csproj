@@ -118,6 +118,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelTests\AboutViewModelTests.cs" />
     <Compile Include="ViewModelTests\DeepLinkCollectionViewModelTests.cs" />
+    <Compile Include="ViewModelTests\DeepLinkHistoryViewModelTests.cs" />
     <Compile Include="ViewModelTests\MainViewModelTests.cs" />
     <Compile Include="ViewModelTests\ShellViewModelTests.cs" />
   </ItemGroup>
