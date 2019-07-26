@@ -71,6 +71,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand MaximizeAppCommand => new SyncCommand(() => this.OnMaximizeApp());
 
+		public ICommand MoveToTrayCommand => new SyncCommand(() => this.OnMoveToTray());
+
 		public ICommand TitleBarDoubleClickedCommand => new SyncCommand(() => this.OnTitleBarDoubleClicked());
 
 		public ISnackbarMessageQueue SbMessageQueue { get => this.sbMessageQueue; private set => this.sbMessageQueue = value; }
@@ -195,6 +197,12 @@ namespace DeepLinkR.Ui.ViewModels
 		private void OnMaximizeApp()
 		{
 			this.CurWindowState = WindowState.Maximized;
+		}
+
+		private void OnMoveToTray()
+		{
+			Application.Current.MainWindow.ShowInTaskbar = false;
+			Application.Current.MainWindow.Visibility = Visibility.Hidden;
 		}
 
 		private void OnExitApp()

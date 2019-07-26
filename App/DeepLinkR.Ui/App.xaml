@@ -1,7 +1,8 @@
 ﻿<Application x:Class="DeepLinkR.Ui.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DeepLinkR.Ui">
+             xmlns:local="clr-namespace:DeepLinkR.Ui"
+             ShutdownMode="OnExplicitShutdown">
 	<Application.Resources>
 		<ResourceDictionary>
 			<BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -23,6 +24,8 @@
 				<!--<materialDesign:CustomColorTheme BaseTheme="Light" Primary="Aqua" Secondary="DarkGreen" />-->
 
 				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+
+				<ResourceDictionary Source="NotifyIconResources.xaml" />
 
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

@@ -19,7 +19,11 @@ namespace DeepLinkR.Core.Helper.SyncCommand
 			this.canExecute = canExecute;
 		}
 
-		public event EventHandler CanExecuteChanged;
+		public event EventHandler CanExecuteChanged
+		{
+			add => CommandManager.RequerySuggested += value;
+			remove => CommandManager.RequerySuggested -= value;
+		}
 
 		public bool CanExecute()
 		{
@@ -41,10 +45,10 @@ namespace DeepLinkR.Core.Helper.SyncCommand
 				}
 			}
 
-			this.TriggerCanExecuteChanged();
+			// this.TriggerCanExecuteChanged();
 		}
 
-		public void TriggerCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+		// public void TriggerCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
 		#region Explicit implementations
 		bool ICommand.CanExecute(object parameter)
@@ -73,7 +77,11 @@ namespace DeepLinkR.Core.Helper.SyncCommand
 			this.canExecute = canExecute;
 		}
 
-		public event EventHandler CanExecuteChanged;
+		public event EventHandler CanExecuteChanged
+		{
+			add => CommandManager.RequerySuggested += value;
+			remove => CommandManager.RequerySuggested -= value;
+		}
 
 		public bool CanExecute(T parameter)
 		{
@@ -95,13 +103,15 @@ namespace DeepLinkR.Core.Helper.SyncCommand
 				}
 			}
 
-			this.TriggerCanExecuteChanged();
+			// this.TriggerCanExecuteChanged();
 		}
 
+		/*
 		public void TriggerCanExecuteChanged()
 		{
 			this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
+		*/
 
 		#region Explicit implementations
 		bool ICommand.CanExecute(object parameter)
