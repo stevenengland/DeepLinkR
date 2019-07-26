@@ -12,6 +12,12 @@ namespace DeepLinkR.Core.Types.Enums
 		[EnumMember(Value = "quit")]
 		Quit,
 
+		[EnumMember(Value = "minimal")]
+		Minimal,
+
+		[EnumMember(Value = "normal")]
+		Normal,
+
 		[EnumMember(Value = "verbose")]
 		Verbose,
 
