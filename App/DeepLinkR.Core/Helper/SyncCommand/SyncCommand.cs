@@ -49,7 +49,6 @@ namespace DeepLinkR.Core.Helper.SyncCommand
 		}
 
 		// public void TriggerCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-
 		#region Explicit implementations
 		bool ICommand.CanExecute(object parameter)
 		{

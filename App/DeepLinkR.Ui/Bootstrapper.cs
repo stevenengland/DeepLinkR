@@ -215,7 +215,6 @@ namespace DeepLinkR.Ui
 		{
 			// Todo: Write you custom code for handling Global unhandled excpetion of Dispatcher or UI thread.
 			// base.OnUnhandledException(sender, e);
-
 			var eventAggregator = (IEventAggregator)this.simpleContainer.GetInstance(typeof(IEventAggregator), null);
 			eventAggregator.PublishOnUIThread(new ErrorEvent(e.Exception, "An unhandled exception occured: " + e.Exception.Message, true));
 			e.Handled = true;

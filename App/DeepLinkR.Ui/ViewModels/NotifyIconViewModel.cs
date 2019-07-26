@@ -13,10 +13,10 @@ namespace DeepLinkR.Ui.ViewModels
 	/// view model is assigned to the NotifyIcon in XAML. Alternatively, the startup routing
 	/// in App.xaml.cs could have created this view model, and assigned it to the NotifyIcon.
 	/// </summary>
-	public class NotifyIconViewModel 
+	public class NotifyIconViewModel
 	{
 		/// <summary>
-		/// Shows a window, if none is already open.
+		/// Gets the main window to show up, if none is already open.
 		/// </summary>
 		public ICommand ShowWindowCommand => new SyncCommand(
 			() =>
@@ -27,7 +27,7 @@ namespace DeepLinkR.Ui.ViewModels
 			() => Application.Current.MainWindow.Visibility != Visibility.Visible);
 
 		/// <summary>
-		/// Hides the main window. This command is only enabled if a window is open.
+		/// Gets the main window to hide. This command is only enabled if a window is open.
 		/// </summary>
 		public ICommand HideWindowCommand => new SyncCommand(
 			() =>
@@ -38,7 +38,7 @@ namespace DeepLinkR.Ui.ViewModels
 			() => Application.Current.MainWindow.Visibility == Visibility.Visible);
 
 		/// <summary>
-		/// Shuts down the application.
+		/// Gets the app to shut down.
 		/// </summary>
 		public ICommand ExitApplicationCommand
 		{

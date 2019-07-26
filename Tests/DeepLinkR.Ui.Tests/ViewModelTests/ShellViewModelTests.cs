@@ -78,7 +78,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 		}
 
 		[Fact]
-		public void ErrorEventsAreHandled()
+		public async Task ErrorEventsAreHandled()
 		{
 			var mockObjects = MockFactories.GetMockObjects();
 
@@ -86,7 +86,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 			var snackbarMock = Mock.Get((ISnackbarMessageQueue)mockObjects[nameof(ISnackbarMessageQueue)]);
 			var vm = MockFactories.ShellViewModelFactory(mockObjects);
 
-			vm.Handle(new ErrorEvent(new Exception(), "test"));
+			await vm.Handle(new ErrorEvent(new Exception(), "test"));
 
 			// dialogHostMapper.Verify(x => x.Show(It.IsAny<object>(), It.IsAny<object>()), Times.Once);
 			snackbarMock.Verify(x => x.Enqueue(It.IsAny<object>(), It.IsAny<object>(), It.IsAny<Action<ErrorEvent>>(), It.IsAny<ErrorEvent>()), Times.Once);

@@ -49,7 +49,7 @@ namespace DeepLinkR.Ui.Tests
 			{
 				try
 				{
-					return (T)base.GetInstance(typeof(T), null);
+					return (T)this.GetInstance(typeof(T), null);
 				}
 				catch (Exception)
 				{
