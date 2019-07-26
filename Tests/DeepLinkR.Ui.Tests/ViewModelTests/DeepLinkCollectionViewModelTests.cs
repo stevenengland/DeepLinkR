@@ -37,6 +37,7 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 		public void IncomingEventsAreHandled()
 		{
 			var mockObjects = MockFactories.GetMockObjects();
+			var eventAggregatorMock = Mock.Get((IEventAggregator)mockObjects[nameof(IEventAggregator)]);
 
 			var vm = MockFactories.DeepLinkCollectionViewModelFactory(mockObjects);
 
@@ -46,6 +47,9 @@ namespace DeepLinkR.Ui.Tests.ViewModelTests
 					MockedDeeplinkMatches.SimpleDeepLinkMatch,
 				},
 				"test"));
+
+			// Updates that come from the history part should not fire a vice versa update
+			eventAggregatorMock.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<System.Action<System.Action>>()), Times.Exactly(0));
 		}
 
 		[Fact]

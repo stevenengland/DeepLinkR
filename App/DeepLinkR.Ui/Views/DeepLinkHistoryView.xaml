@@ -19,9 +19,11 @@
 		</StackPanel>
 		<materialDesign:Card Background="{DynamicResource MaterialDesignBackground}"
 		                     Margin="0 10 0 0">
-			<ListBox x:Name="HistoryListBox" Margin="5 5 5 5"
+			<ListBox x:Name="HistoryListBox" 
+			         Margin="5 5 5 5"
 			         ItemsSource="{Binding HistoryEntryList}"
-			         SelectedItem="{Binding Path=HistoryEntry, Mode=TwoWay}">
+			         SelectedItem="{Binding Path=HistoryEntry, Mode=TwoWay}"
+			         MinHeight="40">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="SelectionChanged">
 						<i:InvokeCommandAction Command="{Binding HistoryItemsSelectionChangedCommand}"

@@ -110,7 +110,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public void Handle(HistoricalDeepLinkSelectedEvent message)
 		{
-			// this.Sideload(message.DeepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
+			this.CurrentMatchName = message.DeepLinkMatchValue;
+			this.Sideload(message.DeepLinkMatches, this.deepLinkSortOrder, this.isDescendingSortOrder);
 		}
 
 		private List<HierarchyLevelOne> CreateSortedHierarchy(List<DeepLinkMatch> deepLinkMatches, DeepLinkSortOrder deepLinkSortOrder, bool descendingSortOrder)
