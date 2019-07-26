@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using DeepLinkR.Core.Helper.SyncCommand;
 using DeepLinkR.Core.Services.ClipboardManager;
+using DeepLinkR.Core.Services.LoggerManager;
 using DeepLinkR.Ui.Events;
 using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
@@ -27,6 +28,7 @@ namespace DeepLinkR.Ui.ViewModels
 		private ISnackbarMessageQueue sbMessageQueue;
 		private IEventAggregator eventAggregator;
 		private IDialogHostMapper dialogHostMapper;
+		private ILoggerManager loggerManager;
 		private bool isMenuBarVisible;
 		private WindowState curWindowState;
 		private MainViewModel mainViewModel;
@@ -39,6 +41,7 @@ namespace DeepLinkR.Ui.ViewModels
 			ISnackbarMessageQueue snackbarMessageQueue,
 			IEventAggregator eventAggregator,
 			IDialogHostMapper dialogHostMapper,
+			ILoggerManager loggerManager,
 			MainViewModel mainViewModel,
 			AboutViewModel aboutViewModel)
 		{
@@ -47,6 +50,7 @@ namespace DeepLinkR.Ui.ViewModels
 			this.SbMessageQueue = snackbarMessageQueue;
 			this.eventAggregator = eventAggregator;
 			this.dialogHostMapper = dialogHostMapper;
+			this.loggerManager = loggerManager;
 			this.mainViewModel = mainViewModel;
 			this.aboutViewModel = aboutViewModel;
 
@@ -93,18 +97,19 @@ namespace DeepLinkR.Ui.ViewModels
 			}
 		}
 
-		public async Task Handle(ErrorEvent message)
+		public async Task Handle(ErrorEvent errorEvent)
 		{
 			// ToDo: Log the Exception
-			this.lastErrorEvent = message;
-			if (message.ApplicationMustShutdown)
+			this.lastErrorEvent = errorEvent;
+			this.loggerManager.Error(errorEvent.Exception);
+			if (errorEvent.ApplicationMustShutdown)
 			{
-				var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(message.ErrorMessage + "\n\n\nApplication needs to shutdown itself"), "RootDialog");
+				var result = await this.dialogHostMapper.Show(this.dialogHostMapper.GetErrorView(errorEvent.ErrorMessage + "\n\n\nApplication needs to shutdown itself"), "RootDialog");
 				this.GracefulShutdown();
 			}
 			else
 			{
-				this.SbMessageQueue.Enqueue<ErrorEvent>("An error occured!", "Details", async (arg) => await this.ShowError(arg), message);
+				this.SbMessageQueue.Enqueue<ErrorEvent>("An error occured!", "Details", async (arg) => await this.ShowError(arg), errorEvent);
 			}
 		}
 

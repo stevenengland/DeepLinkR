@@ -50,9 +50,10 @@
 			"automaticTrim": true,
 			"processMultipleRows": false 
 		},
-		"debugConfiguration": {
-			"IsLoggingEnabled": false,
-			"logLevel": "trace"
+		"loggingConfiguration": {
+			"isLoggingEnabled": true,
+			"logLevel": "trace",
+			"logVerbosity" :  "verbose" 
 		},
 		"browserConfiguration": {
 			"browserDefinitions": [

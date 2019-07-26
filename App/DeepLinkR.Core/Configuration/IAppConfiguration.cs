@@ -11,5 +11,7 @@ namespace DeepLinkR.Core.Configuration
 		IBrowserConfiguration BrowserConfiguration { get; }
 
 		IClipboardConfiguration ClipboardConfiguration { get; }
+
+		ILoggingConfiguration LoggingConfiguration { get; }
 	}
 }

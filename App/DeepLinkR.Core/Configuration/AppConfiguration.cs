@@ -14,10 +14,12 @@ namespace DeepLinkR.Core.Configuration
 		[JsonConstructor]
 		public AppConfiguration(
 			BrowserConfiguration browserConfiguration,
-			ClipboardConfiguration clipboardConfiguration)
+			ClipboardConfiguration clipboardConfiguration,
+			LoggingConfiguration loggingConfiguration)
 		{
 			this.BrowserConfiguration = browserConfiguration;
 			this.ClipboardConfiguration = clipboardConfiguration;
+			this.LoggingConfiguration = loggingConfiguration;
 		}
 
 		[JsonProperty(Required = Required.Always)]
@@ -25,5 +27,8 @@ namespace DeepLinkR.Core.Configuration
 
 		[JsonProperty(Required = Required.Always)]
 		public IClipboardConfiguration ClipboardConfiguration { get; }
+
+		[JsonProperty(Required = Required.Always)]
+		public ILoggingConfiguration LoggingConfiguration { get; }
 	}
 }

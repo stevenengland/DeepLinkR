@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,11 @@ namespace DeepLinkR.Core.Configuration
 	public class ClipboardConfiguration : IClipboardConfiguration
 	{
 		[JsonProperty(Required = Required.Default)]
-		public bool AutomaticTrim { get; private set; } = false;
+		[DefaultValue(false)]
+		public bool AutomaticTrim { get; private set; }
 
 		[JsonProperty(Required = Required.Default)]
-		public bool ProcessMultipleRows { get; private set; } = false;
+		[DefaultValue(false)]
+		public bool ProcessMultipleRows { get; private set; }
 	}
 }

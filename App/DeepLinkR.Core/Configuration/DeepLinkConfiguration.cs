@@ -18,9 +18,9 @@ namespace DeepLinkR.Core.Configuration
 		}
 
 		[JsonProperty(Required = Required.Always)]
-		public List<DeepLinkCategory> DeepLinkCategories { get; set; }
+		public List<DeepLinkCategory> DeepLinkCategories { get; private set; }
 
 		[JsonProperty(Required = Required.Always)]
-		public List<DeepLinkKey> DeepLinkKeys { get; set; }
+		public List<DeepLinkKey> DeepLinkKeys { get; private set; }
 	}
 }

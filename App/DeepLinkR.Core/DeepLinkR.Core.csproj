@@ -51,12 +51,20 @@
     <Reference Include="NHotkey, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NHotkey.1.2.1\lib\net20\NHotkey.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.6.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="SharpClipboard, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpClipboard.3.3.0\lib\SharpClipboard.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -80,6 +88,8 @@
     <Compile Include="Configuration\IClipboardConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationCollection.cs" />
     <Compile Include="Configuration\IDeepLinkConfiguration.cs" />
+    <Compile Include="Configuration\ILoggingConfiguration.cs" />
+    <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="Helper\AsyncCommand\AsyncCommand.cs" />
     <Compile Include="Helper\AsyncCommand\IAsyncCommand.cs" />
     <Compile Include="Helper\AsyncCommand\IErrorHandler.cs" />
@@ -97,6 +107,9 @@
     <Compile Include="Services\ClipboardManager\IClipboardManager.cs" />
     <Compile Include="Services\DeepLinkManager\DeepLinkManager.cs" />
     <Compile Include="Services\DeepLinkManager\IDeepLinkManager.cs" />
+    <Compile Include="Services\LoggerManager\ILoggerManager.cs" />
+    <Compile Include="Services\LoggerManager\LoggerManager.cs" />
+    <Compile Include="Services\LoggerManager\UtcDateRenderer.cs" />
     <Compile Include="Services\ProcessProxy\IProcessProxy.cs" />
     <Compile Include="Services\ProcessProxy\ProcessProxy.cs" />
     <Compile Include="Types\BrowserDefinition.cs" />
@@ -105,6 +118,8 @@
     <Compile Include="Types\DeepLinkKey.cs" />
     <Compile Include="Types\DeepLinkMatch.cs" />
     <Compile Include="Types\Enums\DeepLinkSortOrder.cs" />
+    <Compile Include="Types\Enums\LogLevel.cs" />
+    <Compile Include="Types\Enums\LogVerbosity.cs" />
     <Compile Include="Types\EventArgs\ClipboardChangedEventArgs.cs" />
     <Compile Include="Types\EventArgs\ClipboardTextUpdateEventArgs.cs" />
     <Compile Include="Types\EventArgs\DeepLinksUpdatedEventArgs.cs" />

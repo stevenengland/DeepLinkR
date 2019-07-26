@@ -9,6 +9,7 @@ using DeepLinkR.Core.Configuration;
 using DeepLinkR.Core.Services.BrowserManager;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Core.Services.LoggerManager;
 using DeepLinkR.Ui.Helper.LibraryMapper.DialogHostMapper;
 using DeepLinkR.Ui.Helper.LibraryMapper.NHotkeyManagerMapper;
 using DeepLinkR.Ui.ViewModels;
@@ -27,6 +28,7 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				(ISnackbarMessageQueue)mockObjects[nameof(ISnackbarMessageQueue)],
 				(IEventAggregator)mockObjects[nameof(IEventAggregator)],
 				(IDialogHostMapper)mockObjects[nameof(IDialogHostMapper)],
+				(ILoggerManager)mockObjects[nameof(ILoggerManager)],
 				new MainViewModel( // ToDo Factorize
 					MockFactories.DeepLinkCollectionViewModelFactory(GetMockObjects()),
 					MockFactories.DeepLinkHistoryViewModelFactory(GetMockObjects())),
@@ -63,6 +65,7 @@ namespace DeepLinkR.Ui.Tests.Mocks
 				{ nameof(ISnackbarMessageQueue), MockFactories.GetISnackbarMessageQueue() },
 				{ nameof(IDialogHostMapper), MockFactories.GetIDialogHostMapper() },
 				{ nameof(IBrowserManager), MockFactories.GetBrowserManager() },
+				{ nameof(ILoggerManager), MockFactories.GetLoggerManager() },
 			};
 		}
 
@@ -109,6 +112,11 @@ namespace DeepLinkR.Ui.Tests.Mocks
 		public static IBrowserManager GetBrowserManager()
 		{
 			return new Mock<IBrowserManager>().Object;
+		}
+
+		public static ILoggerManager GetLoggerManager()
+		{
+			return new Mock<ILoggerManager>().Object;
 		}
 	}
 }

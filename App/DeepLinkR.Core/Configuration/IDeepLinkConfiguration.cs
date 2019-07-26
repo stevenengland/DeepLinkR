@@ -9,8 +9,8 @@ namespace DeepLinkR.Core.Configuration
 {
 	public interface IDeepLinkConfiguration
 	{
-		List<DeepLinkCategory> DeepLinkCategories { get; set; }
+		List<DeepLinkCategory> DeepLinkCategories { get; }
 
-		List<DeepLinkKey> DeepLinkKeys { get; set; }
+		List<DeepLinkKey> DeepLinkKeys { get; }
 	}
 }

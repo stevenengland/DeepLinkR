@@ -14,6 +14,7 @@ using DeepLinkR.Core.Helper.LibraryMapper.TextCopyMapper;
 using DeepLinkR.Core.Services.BrowserManager;
 using DeepLinkR.Core.Services.ClipboardManager;
 using DeepLinkR.Core.Services.DeepLinkManager;
+using DeepLinkR.Core.Services.LoggerManager;
 using DeepLinkR.Core.Services.ProcessProxy;
 using DeepLinkR.Core.Types;
 using DeepLinkR.Ui.Events;
@@ -48,6 +49,8 @@ namespace DeepLinkR.Ui
 
 		private IBrowserManager BrowserManager { get; set; }
 
+		private ILoggerManager LoggerManager { get; set; }
+
 		protected override void Configure()
 		{
 			try
@@ -63,16 +66,8 @@ namespace DeepLinkR.Ui
 					new DeepLinkConfiguration(),
 					new AppConfiguration(
 						new BrowserConfiguration(),
-						new ClipboardConfiguration()));
-			}
-
-			try
-			{
-				this.ConfigurationCollection.Validate();
-			}
-			catch (Exception e)
-			{
-				this.SetErrorEvent(new ErrorEvent(e, "Configuration violates one or more rules: " + e.Message, true));
+						new ClipboardConfiguration(),
+						new LoggingConfiguration()));
 			}
 
 			try
@@ -83,6 +78,16 @@ namespace DeepLinkR.Ui
 			catch (Exception e)
 			{
 				this.SetErrorEvent(new ErrorEvent(e, "Configuration violates one or more rules: " + e.Message, true));
+			}
+
+			try
+			{
+				this.LoggerManager = Core.Services.LoggerManager.LoggerManager.GetLoggingService(this.ConfigurationCollection.AppConfiguration.LoggingConfiguration);
+				this.simpleContainer.Instance<ILoggerManager>(this.LoggerManager);
+			}
+			catch (Exception e)
+			{
+				this.SetErrorEvent(new ErrorEvent(e, $"Could not load {nameof(this.LoggerManager)}:" + e.Message, true));
 			}
 
 			try
