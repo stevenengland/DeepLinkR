@@ -9,7 +9,7 @@ namespace DeepLinkR.Core.Services.LoggerManager
 {
 	public class LoggerManager : Logger, ILoggerManager
 	{
-		private const string _loggerName = "NLogLogger";
+		private const string LoggerName = "NLogLogger";
 
 		public static ILoggerManager GetLoggingService(ILoggingConfiguration loggingConfiguration)
 		{
@@ -49,7 +49,7 @@ namespace DeepLinkR.Core.Services.LoggerManager
 				logfile.Layout =
 					"Local-Date=${longdate}|Level=${level}|Log-Message=${message}|Error-Message=${event-context:item=error-message}";
 			}
-			else if(loggingConfiguration.LogVerbosity == LogVerbosity.Diagnostic)
+			else if (loggingConfiguration.LogVerbosity == LogVerbosity.Diagnostic)
 			{
 				logfile.Layout =
 					"Local-Date=${longdate}|Level=${level}|Log-Message=${message}|Error-Source=${event-context:item=error-source}|Error-Class=${event-context:item=error-class}|Error-Method=${event-context:item=error-method}|Error-Message=${event-context:item=error-message}|Inner-Error-Message=${event-context:item=inner-error-message}";
@@ -78,46 +78,70 @@ namespace DeepLinkR.Core.Services.LoggerManager
 			return logger;
 		}
 
-		public void Debug(Exception exception, string format, params object[] args)
+		public new void Debug(Exception exception, string format, params object[] args)
 		{
-			if (!this.IsDebugEnabled) return;
-			var logEvent = this.GetLogEvent(_loggerName, LogLevel.Debug, exception, format, args);
-			base.Log(typeof(ILoggerManager), logEvent);
+			if (!this.IsDebugEnabled)
+			{
+				return;
+			}
+
+			var logEvent = this.GetLogEvent(LoggerName, LogLevel.Debug, exception, format, args);
+			this.Log(typeof(ILoggerManager), logEvent);
 		}
 
-		public void Error(Exception exception, string format, params object[] args)
+		public new void Error(Exception exception, string format, params object[] args)
 		{
-			if (!base.IsErrorEnabled) return;
-			var logEvent = this.GetLogEvent(_loggerName, LogLevel.Error, exception, format, args);
-			base.Log(typeof(ILoggerManager), logEvent);
+			if (!this.IsErrorEnabled)
+			{
+				return;
+			}
+
+			var logEvent = this.GetLogEvent(LoggerName, LogLevel.Error, exception, format, args);
+			this.Log(typeof(ILoggerManager), logEvent);
 		}
 
-		public void Fatal(Exception exception, string format, params object[] args)
+		public new void Fatal(Exception exception, string format, params object[] args)
 		{
-			if (!base.IsFatalEnabled) return;
-			var logEvent = this.GetLogEvent(_loggerName, LogLevel.Fatal, exception, format, args);
-			base.Log(typeof(ILoggerManager), logEvent);
+			if (!this.IsFatalEnabled)
+			{
+				return;
+			}
+
+			var logEvent = this.GetLogEvent(LoggerName, LogLevel.Fatal, exception, format, args);
+			this.Log(typeof(ILoggerManager), logEvent);
 		}
 
-		public void Info(Exception exception, string format, params object[] args)
+		public new void Info(Exception exception, string format, params object[] args)
 		{
-			if (!base.IsInfoEnabled) return;
-			var logEvent = this.GetLogEvent(_loggerName, LogLevel.Info, exception, format, args);
-			base.Log(typeof(ILoggerManager), logEvent);
+			if (!this.IsInfoEnabled)
+			{
+				return;
+			}
+
+			var logEvent = this.GetLogEvent(LoggerName, LogLevel.Info, exception, format, args);
+			this.Log(typeof(ILoggerManager), logEvent);
 		}
 
-		public void Trace(Exception exception, string format, params object[] args)
+		public new void Trace(Exception exception, string format, params object[] args)
 		{
-			if (!base.IsTraceEnabled) return;
-			var logEvent = this.GetLogEvent(_loggerName, LogLevel.Trace, exception, format, args);
-			base.Log(typeof(ILoggerManager), logEvent);
+			if (!this.IsTraceEnabled)
+			{
+				return;
+			}
+
+			var logEvent = this.GetLogEvent(LoggerName, LogLevel.Trace, exception, format, args);
+			this.Log(typeof(ILoggerManager), logEvent);
 		}
 
-		public void Warn(Exception exception, string format, params object[] args)
+		public new void Warn(Exception exception, string format, params object[] args)
 		{
-			if (!base.IsWarnEnabled) return;
-			var logEvent = this.GetLogEvent(_loggerName, LogLevel.Warn, exception, format, args);
-			base.Log(typeof(ILoggerManager), logEvent);
+			if (!this.IsWarnEnabled)
+			{
+				return;
+			}
+
+			var logEvent = this.GetLogEvent(LoggerName, LogLevel.Warn, exception, format, args);
+			this.Log(typeof(ILoggerManager), logEvent);
 		}
 
 		public void Debug(Exception exception)
@@ -159,8 +183,8 @@ namespace DeepLinkR.Core.Services.LoggerManager
 			string innerMessageProp = string.Empty;
 			string stackTraceProp = string.Empty;
 
-			var logEvent = new LogEventInfo
-				(level, loggerName, string.Format(format, args));
+			var logEvent = new LogEventInfo(
+				level, loggerName, string.Format(format, args));
 
 			if (exception != null)
 			{
