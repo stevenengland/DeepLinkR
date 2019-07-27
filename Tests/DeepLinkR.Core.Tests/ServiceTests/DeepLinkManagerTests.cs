@@ -38,17 +38,19 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 		}
 
 		[Theory]
-		[InlineData("stevenengland", 1)]
-		[InlineData("1234567890", 2)]
-		[InlineData("a234567890", 2)]
-		[InlineData("abcdefghijklmnopq", 1)]
-		public void CorrectListOfMatchingDeepLinksIsGenerated(string text, int expectedKeyCount)
+		[InlineData("stevenengland", "stevenengland", 1)]
+		[InlineData("1234567890", "1234567890", 2)]
+		[InlineData("a234567890", "a234567890", 2)]
+		[InlineData("abcdefghijklmnopq", "abcdefghijklmnopq", 1)]
+		[InlineData("123-12345678", "123#12345678", 1)]
+		public void CorrectListOfMatchingDeepLinksIsGenerated(string text, string expectedReplacedText, int expectedKeyCount)
 		{
 			this.deepLinkConfigurationMock.SetupGet(x => x.DeepLinkKeys).Returns(MockedDeepLinkKeys.CategoryTestKeys);
 			this.deepLinkConfigurationMock.SetupGet(x => x.DeepLinkCategories).Returns(MockedDeepLinkCategories.TestCategories);
 
 			var result = this.deepLinkManager.GetDeepLinkMatches(text);
 
+			Assert.Contains(expectedReplacedText, result[0].DeepLinkUrl);
 			Assert.Equal(expectedKeyCount, result.Count);
 		}
 	}

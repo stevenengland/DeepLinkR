@@ -52,6 +52,18 @@ namespace DeepLinkR.Core.Tests.MockedObjects
 					},
 				},
 			},
+			new DeepLinkCategory()
+			{
+				Name = "Third Example Page",
+				DeepLinks = new List<DeepLink>()
+				{
+					new DeepLink()
+					{
+						Name = "RegexReplaceName",
+						Url = "https://secondexample.com/orders/{RegexReplaceKey|$1#$2}",
+					},
+				},
+			},
 		};
 	}
 }

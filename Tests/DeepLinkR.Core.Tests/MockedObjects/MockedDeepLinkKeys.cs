@@ -67,6 +67,14 @@ namespace DeepLinkR.Core.Tests.MockedObjects
 					@"^[a-z]{15,20}$",
 				},
 			},
+			new DeepLinkKey()
+			{
+				Name = "RegexReplaceKey",
+				RegExPattern = new List<string>()
+				{
+					@"^(\d{3})-(\d{8})$",
+				},
+			},
 		};
 	}
 }
