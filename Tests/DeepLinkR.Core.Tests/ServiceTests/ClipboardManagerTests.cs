@@ -100,6 +100,39 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 			Assert.False(eventRaised);
 		}
 
+		[Theory]
+		[InlineData("testText\r\ntest", false, 0, 1)]
+		[InlineData("testText\r\ntest", true, 10, 2)]
+		[InlineData("testText\r\ntest", true, 1, 1)]
+		public void CorrectNumberOfEntriesIsPublished(string testText, bool multipleRows, int maxMultipleRows, int expectedEntriesCount)
+		{
+			var mockObjects = MockFactories.GetMockObjects();
+			var clipboardConfig = Mock.Get((IClipboardConfiguration)mockObjects[nameof(IClipboardConfiguration)]);
+			var sharpClipboardMapper = Mock.Get((ISharpClipboardMapper)mockObjects[nameof(ISharpClipboardMapper)]);
+			var textCopyMapper = Mock.Get((ITextCopyMapper)mockObjects[nameof(ITextCopyMapper)]);
+
+			clipboardConfig.SetupGet(x => x.MaxProcessedRows).Returns(maxMultipleRows);
+			clipboardConfig.SetupGet(x => x.ProcessMultipleRows).Returns(multipleRows);
+
+			var clipboardManager = MockFactories.ClipboardManagerFactory(mockObjects);
+			clipboardManager.AppName = "testApp2";
+			var eventCorrectRaised = false;
+			clipboardManager.ClipboardTextUpdateReceived += (s, e) =>
+			{
+				eventCorrectRaised = e.ClipboardEntries.Length == expectedEntriesCount;
+			};
+
+			sharpClipboardMapper.Raise(
+				x => x.ClipboardChanged += null,
+				this,
+				new ClipboardChangedEventArgs(
+					applicationName: "testApp",
+					clipboardContent: testText,
+					contentType: SharpClipboard.ContentTypes.Text));
+
+			Assert.True(eventCorrectRaised);
+		}
+
 		[Fact]
 		public void ClipBoardUpdateEventsAreCorrectlyProcessed()
 		{
@@ -137,6 +170,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 			var textCopyMapper = Mock.Get((ITextCopyMapper)mockObjects[nameof(ITextCopyMapper)]);
 			clipboardConfig.SetupGet(x => x.AutomaticTrim).Returns(true);
 			clipboardConfig.SetupGet(x => x.ProcessMultipleRows).Returns(true);
+			clipboardConfig.SetupGet(x => x.MaxProcessedRows).Returns(100);
 
 			var clipboardManager = MockFactories.ClipboardManagerFactory(mockObjects);
 

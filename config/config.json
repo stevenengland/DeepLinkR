@@ -48,7 +48,8 @@
 	"appConfiguration": {
 		"clipboardConfiguration": {
 			"automaticTrim": true,
-			"processMultipleRows": false 
+			"processMultipleRows": false,
+			"maxProcessedRows" : 20 
 		},
 		"loggingConfiguration": {
 			"isLoggingEnabled": true,
