@@ -11,5 +11,7 @@ namespace DeepLinkR.Core.Configuration
 		bool AutomaticTrim { get; }
 
 		bool ProcessMultipleRows { get; }
+
+		int MaxProcessedRows { get; }
 	}
 }

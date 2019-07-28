@@ -59,6 +59,10 @@ namespace DeepLinkR.Core.Services.ClipboardManager
 						entries = text.Split(
 							new[] { Environment.NewLine },
 							StringSplitOptions.None);
+						if (entries.Length > this.clipboardConfiguration.MaxProcessedRows)
+						{
+							Array.Resize(ref entries, this.clipboardConfiguration.MaxProcessedRows);
+						}
 					}
 					else
 					{

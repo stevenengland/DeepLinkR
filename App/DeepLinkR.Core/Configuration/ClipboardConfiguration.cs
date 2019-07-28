@@ -19,5 +19,9 @@ namespace DeepLinkR.Core.Configuration
 		[JsonProperty(Required = Required.Default)]
 		[DefaultValue(false)]
 		public bool ProcessMultipleRows { get; private set; }
+
+		[JsonProperty(Required = Required.Default)]
+		[DefaultValue(100)]
+		public int MaxProcessedRows { get; private set; }
 	}
 }
