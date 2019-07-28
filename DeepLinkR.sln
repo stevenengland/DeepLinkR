@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.705
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Ui", "App\DeepLinkR.Ui\DeepLinkR.Ui.csproj", "{3234258E-4CE8-4A6C-B506-00ACF7E78DE1}"
 EndProject
@@ -15,9 +15,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepLinkR.Ui.Tests", "Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}"
 	ProjectSection(SolutionItems) = preProject
-		stylecop\AnalyzerRules.ruleset = stylecop\AnalyzerRules.ruleset
 		config\config.json = config\config.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "analyzer", "analyzer", "{7A056870-CC56-415E-837E-E8ABC1C6855C}"
+	ProjectSection(SolutionItems) = preProject
+		stylecop\AnalyzerRules.ruleset = stylecop\AnalyzerRules.ruleset
 		stylecop\stylecop.json = stylecop\stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{4F4886A3-25D5-43A2-8F8F-61C904067945}"
+	ProjectSection(SolutionItems) = preProject
+		pipelines\vsts_ci.yml = pipelines\vsts_ci.yml
 	EndProjectSection
 EndProject
 Global
@@ -49,6 +58,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{28E1AB34-C58E-4C8B-B20D-58940C915EC5} = {6F18D074-2233-4BD6-A7C5-FEBA4980DF39}
 		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B} = {6F18D074-2233-4BD6-A7C5-FEBA4980DF39}
+		{7A056870-CC56-415E-837E-E8ABC1C6855C} = {3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}
+		{4F4886A3-25D5-43A2-8F8F-61C904067945} = {3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {25061B4B-A61B-42DD-BE34-3E03BA467BD5}
