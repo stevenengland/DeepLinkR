@@ -170,6 +170,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 			var textCopyMapper = Mock.Get((ITextCopyMapper)mockObjects[nameof(ITextCopyMapper)]);
 			clipboardConfig.SetupGet(x => x.AutomaticTrim).Returns(true);
 			clipboardConfig.SetupGet(x => x.ProcessMultipleRows).Returns(true);
+			clipboardConfig.SetupGet(x => x.MaxProcessedRows).Returns(100);
 
 			var clipboardManager = MockFactories.ClipboardManagerFactory(mockObjects);
 
