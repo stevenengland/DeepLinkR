@@ -90,7 +90,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\BrowserConfiguration.cs" />
     <Compile Include="Configuration\ClipboardConfiguration.cs" />
