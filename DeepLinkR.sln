@@ -29,6 +29,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{
 		pipelines\vsts_ci.yml = pipelines\vsts_ci.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{DFB172D8-FD70-461F-8506-04675A5A8722}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +66,7 @@ Global
 		{78911FF0-219B-4A3E-8CC0-C04DC8431D4B} = {6F18D074-2233-4BD6-A7C5-FEBA4980DF39}
 		{7A056870-CC56-415E-837E-E8ABC1C6855C} = {3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}
 		{4F4886A3-25D5-43A2-8F8F-61C904067945} = {3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}
+		{DFB172D8-FD70-461F-8506-04675A5A8722} = {3C0AEE3F-2BD2-4763-A691-424A1E1EF07A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {25061B4B-A61B-42DD-BE34-3E03BA467BD5}
