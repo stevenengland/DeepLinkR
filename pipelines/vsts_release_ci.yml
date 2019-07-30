@@ -29,10 +29,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-    task: CopyFiles@2
-      inputs:
-        contents: '**\*'
-        targetFolder: $(Build.ArtifactStagingDirectory)
+- task: CopyFiles@2
+  inputs:
+    contents: '**\*'
+    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   inputs:
