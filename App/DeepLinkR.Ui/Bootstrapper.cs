@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -184,6 +185,15 @@ namespace DeepLinkR.Ui
 		protected override void OnStartup(object sender, StartupEventArgs e)
 		{
 			// base.OnStartup(sender, e);
+
+			var proc = Process.GetCurrentProcess();
+			var count = Process.GetProcesses().Count(p => p.ProcessName == proc.ProcessName);
+
+			if (count > 1)
+			{
+				Environment.Exit(1);
+			}
+
 			this.DisplayRootViewFor<ShellViewModel>();
 			if (this.firstErrorEvent != null)
 			{
