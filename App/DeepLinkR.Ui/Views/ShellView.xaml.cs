@@ -28,7 +28,9 @@ namespace DeepLinkR.Ui.Views
 		{
 			if (e.LeftButton == MouseButtonState.Pressed)
 			{
-				if (this.WindowState == System.Windows.WindowState.Maximized)
+				// Fix: https://github.com/stevenengland/DeepLinkR/issues/6
+				// If the popup box is not checked the mousemove event gets handled because the popup box is part of the color zone
+				if (this.WindowState == System.Windows.WindowState.Maximized && !this.PopupBox.IsPopupOpen)
 				{
 					var x = e.GetPosition(this).X;
 					var y = e.GetPosition(this).Y;

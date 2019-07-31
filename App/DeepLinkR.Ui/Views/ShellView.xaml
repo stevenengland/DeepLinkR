@@ -86,7 +86,8 @@
 						              Width="20"
 						              Height="20"/>
 						<!-- THREE DOTS MENU -->
-						<materialDesign:PopupBox DockPanel.Dock="Right" 
+						<materialDesign:PopupBox x:Name="PopupBox"
+						                         DockPanel.Dock="Right" 
 						                         PlacementMode="BottomAndAlignRightEdges" 
 						                         StaysOpen="False">
 							<StackPanel>

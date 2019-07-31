@@ -65,7 +65,8 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand MenuItemsSelectionChangedCommand => new SyncCommand(() => this.OnMenuItemsSelectionChanged());
 
-		public ICommand ExitAppCommand => new SyncCommand(() => this.OnExitApp());
+		public ICommand ExitAppCommand => new SyncCommand(() => 
+			this.OnExitApp());
 
 		public ICommand MinimizeAppCommand => new SyncCommand(() => this.OnMinimizeApp());
 
@@ -222,6 +223,7 @@ namespace DeepLinkR.Ui.ViewModels
 
 		private void GracefulShutdown()
 		{
+			this.TryClose();
 			System.Windows.Application.Current.Shutdown();
 		}
 	}
