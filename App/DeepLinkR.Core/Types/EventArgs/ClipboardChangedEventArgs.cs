@@ -9,14 +9,17 @@ namespace DeepLinkR.Core.Types.EventArgs
 {
 	public class ClipboardChangedEventArgs : System.EventArgs
 	{
-		public ClipboardChangedEventArgs(string applicationName, object clipboardContent, SharpClipboard.ContentTypes contentType)
+		public ClipboardChangedEventArgs(string applicationName, string applicationTitle, object clipboardContent, SharpClipboard.ContentTypes contentType)
 		{
 			this.ApplicationName = applicationName;
+			this.ApplicationTitle = applicationTitle;
 			this.ClipboardContent = clipboardContent;
 			this.ContentType = contentType;
 		}
 
 		public string ApplicationName { get; set; }
+
+		public string ApplicationTitle { get; set; }
 
 		public object ClipboardContent { get; set; }
 

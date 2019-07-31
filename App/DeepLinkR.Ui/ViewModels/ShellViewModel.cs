@@ -34,6 +34,7 @@ namespace DeepLinkR.Ui.ViewModels
 		private MainViewModel mainViewModel;
 		private AboutViewModel aboutViewModel;
 		private ErrorEvent lastErrorEvent;
+		private string windowTitle;
 
 		public ShellViewModel(
 			IClipboardManager clipboardManager,
@@ -56,6 +57,9 @@ namespace DeepLinkR.Ui.ViewModels
 
 			this.eventAggregator.Subscribe(this);
 
+			this.WindowTitle = "DeepLinkR UI";
+			this.clipboardManager.AppIdentifier = this.WindowTitle;
+
 			// Register hotkey
 			this.RegisterHotkey();
 
@@ -65,8 +69,7 @@ namespace DeepLinkR.Ui.ViewModels
 
 		public ICommand MenuItemsSelectionChangedCommand => new SyncCommand(() => this.OnMenuItemsSelectionChanged());
 
-		public ICommand ExitAppCommand => new SyncCommand(() => 
-			this.OnExitApp());
+		public ICommand ExitAppCommand => new SyncCommand(() => this.OnExitApp());
 
 		public ICommand MinimizeAppCommand => new SyncCommand(() => this.OnMinimizeApp());
 
@@ -79,6 +82,16 @@ namespace DeepLinkR.Ui.ViewModels
 		public ISnackbarMessageQueue SbMessageQueue { get => this.sbMessageQueue; private set => this.sbMessageQueue = value; }
 
 		public NavigationMenuItem[] MenuItems { get; private set; }
+
+		public string WindowTitle
+		{
+			get => this.windowTitle;
+			private set
+			{
+				this.windowTitle = value;
+				this.NotifyOfPropertyChange(() => this.WindowTitle);
+			}
+		}
 
 		public bool IsMenuBarVisible
 		{

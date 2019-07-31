@@ -49,6 +49,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 				this,
 				new ClipboardChangedEventArgs(
 					applicationName: "testApp",
+					applicationTitle: "testAppTitle",
 					clipboardContent: "testContent",
 					contentType: SharpClipboard.ContentTypes.Text));
 
@@ -71,6 +72,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 				this,
 				new ClipboardChangedEventArgs(
 					applicationName: "testApp",
+					applicationTitle: "testAppTitle",
 					clipboardContent: "testContent",
 					contentType: SharpClipboard.ContentTypes.Other));
 
@@ -78,7 +80,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 		}
 
 		[Fact]
-		public void ClipboardEventsAreNotFiredApplicationNameIsEqualToThisApplicationName()
+		public void ClipboardEventsAreNotFiredIfApplicationNameIsEqualToThisApplicationName()
 		{
 			var mockObjects = MockFactories.GetMockObjects();
 			var clipboardConfig = Mock.Get((IClipboardConfiguration)mockObjects[nameof(IClipboardConfiguration)]);
@@ -86,7 +88,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 			var textCopyMapper = Mock.Get((ITextCopyMapper)mockObjects[nameof(ITextCopyMapper)]);
 
 			var clipboardManager = MockFactories.ClipboardManagerFactory(mockObjects);
-			clipboardManager.AppName = "testApp";
+			clipboardManager.AppIdentifier = "testAppTitle";
 			var eventRaised = false;
 			clipboardManager.ClipboardTextUpdateReceived += (s, e) => { eventRaised = true; };
 			sharpClipboardMapper.Raise(
@@ -94,6 +96,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 				this,
 				new ClipboardChangedEventArgs(
 					applicationName: "testApp",
+					applicationTitle: "testAppTitle",
 					clipboardContent: "testContent",
 					contentType: SharpClipboard.ContentTypes.Text));
 
@@ -115,7 +118,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 			clipboardConfig.SetupGet(x => x.ProcessMultipleRows).Returns(multipleRows);
 
 			var clipboardManager = MockFactories.ClipboardManagerFactory(mockObjects);
-			clipboardManager.AppName = "testApp2";
+			clipboardManager.AppIdentifier = "testApp2";
 			var eventCorrectRaised = false;
 			clipboardManager.ClipboardTextUpdateReceived += (s, e) =>
 			{
@@ -127,6 +130,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 				this,
 				new ClipboardChangedEventArgs(
 					applicationName: "testApp",
+					applicationTitle: "testAppTitle",
 					clipboardContent: testText,
 					contentType: SharpClipboard.ContentTypes.Text));
 
@@ -154,6 +158,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 				this,
 				new ClipboardChangedEventArgs(
 					applicationName: "testApp",
+					applicationTitle: "testAppTitle",
 					clipboardContent: "testContent",
 					contentType: SharpClipboard.ContentTypes.Text));
 
@@ -185,6 +190,7 @@ namespace DeepLinkR.Core.Tests.ServiceTests
 				this,
 				new ClipboardChangedEventArgs(
 					applicationName: "testApp",
+					applicationTitle: "testAppTitle",
 					clipboardContent: " testContent " + Environment.NewLine + " testContent2 ",
 					contentType: SharpClipboard.ContentTypes.Text));
 

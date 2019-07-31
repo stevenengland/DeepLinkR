@@ -17,7 +17,7 @@ namespace DeepLinkR.Core.Services.ClipboardManager
 		private IClipboardConfiguration clipboardConfiguration;
 		private ISharpClipboardMapper sharpClipboardMapper;
 		private ITextCopyMapper textCopyMapper;
-		private string appName = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";
+		private string appIdentifier = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";
 
 		public ClipboardManager(IClipboardConfiguration clipboardConfiguration, ISharpClipboardMapper sharpClipboardMapper, ITextCopyMapper textCopyMapper)
 		{
@@ -30,10 +30,10 @@ namespace DeepLinkR.Core.Services.ClipboardManager
 
 		public event EventHandler<ClipboardTextUpdateEventArgs> ClipboardTextUpdateReceived;
 
-		public string AppName
+		public string AppIdentifier
 		{
-			get => this.appName;
-			set => this.appName = value;
+			get => this.appIdentifier;
+			set => this.appIdentifier = value;
 		}
 
 		public void CopyTextToClipboard(string text)
@@ -51,7 +51,7 @@ namespace DeepLinkR.Core.Services.ClipboardManager
 				var text = (string)e.ClipboardContent;
 
 				// Suppress monitoring events from the own application
-				if (e.ApplicationName != this.appName)
+				if (e.ApplicationTitle != this.appIdentifier)
 				{
 					string[] entries;
 					if (this.clipboardConfiguration.ProcessMultipleRows)

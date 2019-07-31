@@ -26,7 +26,7 @@ namespace DeepLinkR.Core.Helper.LibraryMapper.SharpClipboardMapper
 
 		private void OnSharpClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
 		{
-			this.ClipboardChanged?.Invoke(this, new ClipboardChangedEventArgs(e.SourceApplication.Name, e.Content, e.ContentType));
+			this.ClipboardChanged?.Invoke(this, new ClipboardChangedEventArgs(e.SourceApplication.Name, e.SourceApplication.Title, e.Content, e.ContentType));
 		}
 	}
 }
