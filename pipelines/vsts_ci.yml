@@ -27,8 +27,8 @@ steps:
     versionFormat: 'custom'
     customBuildRegex: '(\d{8})\.(\d+)'
     replaceVersionFormat: 'custom'
-    customReplaceRegex: '\.\d\.\d"\)]$'
-    buildRegexIndex: '1'
+    customReplaceRegex: '\.\d\.\d"\)\]$'
+    buildRegexIndex: '2'
     replacePrefix: '.'
     replacePostfix: '")]'
     failIfNoMatchFound: true
