@@ -6,7 +6,32 @@
              xmlns:local="clr-namespace:DeepLinkR.Ui.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            <TextBlock>About</TextBlock>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+	    <Grid.Resources>
+			<Style TargetType="{x:Type TextBlock}">
+			    <Setter Property="Margin" Value="15,5,0,4" />
+		    </Style>
+	    </Grid.Resources>
+		<Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="App Version:"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding AppVersion}"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Project Homepage:"/>
+        <TextBlock Grid.Column="1" Grid.Row="1">
+	        <Hyperlink NavigateUri="https://github.com/stevenengland/DeepLinkR">
+					<Hyperlink.Inlines>
+						<Run Text="https://github.com/stevenengland/DeepLinkR" />
+					</Hyperlink.Inlines>
+				</Hyperlink>
+        </TextBlock>
+        
     </Grid>
 </UserControl>
