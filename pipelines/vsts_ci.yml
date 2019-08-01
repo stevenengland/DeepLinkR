@@ -19,6 +19,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+steps:
 - task: VersionAssemblies@2
   inputs:
     sourcePath: 'App'
@@ -28,7 +29,6 @@ variables:
     replaceVersionFormat: 'fourParts'
     failIfNoMatchFound: true
 
-steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
