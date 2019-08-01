@@ -27,7 +27,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{4F4886A3-25D5-43A2-8F8F-61C904067945}"
 	ProjectSection(SolutionItems) = preProject
 		pipelines\vsts_ci.yml = pipelines\vsts_ci.yml
-		pipelines\vsts_release_ci.yml = pipelines\vsts_release_ci.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{DFB172D8-FD70-461F-8506-04675A5A8722}"
