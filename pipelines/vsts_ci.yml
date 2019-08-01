@@ -22,11 +22,14 @@ variables:
 steps:
 - task: VersionAssemblies@2
   inputs:
-    sourcePath: 'App'
     filePattern: '**/AssemblyInfo.*'
     versionSource: 'buildNumber'
-    versionFormat: 'fourParts'
-    replaceVersionFormat: 'fourParts'
+    versionFormat: 'custom'
+    customBuildRegex: '(\d{8})\.(\d+)'
+    replaceVersionFormat: 'custom'
+    customReplaceRegex: 'AssemblyVersion\("\d\.\d\.\d\.\d'
+    buildRegexIndex: '2'
+    replacePrefix: 'AssemblyVersion\("\d\.\d\.'
     failIfNoMatchFound: true
 
 - task: NuGetToolInstaller@1
