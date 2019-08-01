@@ -27,9 +27,10 @@ steps:
     versionFormat: 'custom'
     customBuildRegex: '(\d{8})\.(\d+)'
     replaceVersionFormat: 'custom'
-    customReplaceRegex: 'AssemblyVersion\("\d\.\d\.\d\.\d'
-    buildRegexIndex: '2'
-    replacePrefix: 'AssemblyVersion\("\d\.\d\.'
+    customReplaceRegex: '\.\d\.\d"\)]$'
+    buildRegexIndex: '1'
+    replacePrefix: '.'
+    replacePostfix: '")]'
     failIfNoMatchFound: true
 
 - task: NuGetToolInstaller@1
