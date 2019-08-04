@@ -22,7 +22,7 @@ variables:
   Parameters.solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  Version.revision: '$[counter(format('{0:yyyyMMdd}', pipeline.startTime), 0)]'
+  Version.revision: '$[counter(format(''{0:yyyyMMdd}'', pipeline.startTime), 0)]'
 
 steps:
 - powershell: |
